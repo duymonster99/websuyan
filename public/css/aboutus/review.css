@@ -1,0 +1,48 @@
+
+
+main .bg {
+    width: 100%;
+    height: 500px;
+}
+
+.feel__container {
+    width: 95%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    padding: 50px 0;
+}
+
+.feel__container--title {
+    width: 540px;
+    height: 74px;
+    border-radius: 8px;
+    background: #fff;
+    font-weight: 800;
+    font-size: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.feel__container--slider {
+    width: 100%;
+}
+
+.feel_slider-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px
+}
+
+.feel_slider_details {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.feel_slider_details img {
+    width: 330px;
+}

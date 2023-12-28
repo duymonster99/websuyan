@@ -1,0 +1,71 @@
+
+
+main .bg {
+    width: 100%;
+    height: 500px;
+}
+
+.profile-teacher {
+    width: 95%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    padding-top: 30px;
+}
+
+.profile-teacher__title {
+    width: 540px;
+    height: 100px;
+    border-radius: 8px;
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile-teacher__title .title {
+    font-size: 36px;
+    font-weight: 800;
+}
+
+.profile-teacher__wrapper {
+    width: 100%;
+}
+
+.profile-teacher__carousel {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 40px;
+}
+
+.profile-teacher__card {
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #fff;
+    border-radius: 8px;
+}
+
+.profile-teacher__name {
+    width: 300px;
+    height: 55px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #C9E6C0;
+    border-radius: 8px;
+    font-size: 20px;
+    font-weight: 400;
+    margin-bottom: 20px;
+}
+
+.profile-teacher__image img {
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+}

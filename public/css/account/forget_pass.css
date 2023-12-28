@@ -1,0 +1,95 @@
+.forget_wrapper {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #9ca3af;
+}
+
+.forget_container {
+    width: 30%;
+    height: auto;
+    border: 1px solid #9ca3af;
+    border-radius: 36px;
+    padding: 30px;
+    position: relative;
+}
+
+.forget_button {
+    width: 256px;
+    height: 49px;
+    padding: 16px 64px;
+    background: #32b768;
+    border-radius: 12px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    display: flex;
+    border: none;
+    margin: auto;
+    color: #fff;
+    font-weight: bold;
+}
+
+.forget-img {
+    width: 400px;
+    height: 173.68px;
+    margin: auto;
+}
+
+.forget-img .bg {
+    width: 70%;
+    height: 190px;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+}
+
+.forget-img .vector1 {
+    width: 187px;
+    height: 162px;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+}
+
+.forget-img .vector2 {
+    width: 26.99px;
+    height: 29.871px;
+    position: absolute;
+    top: 15%;
+    right: 12%;
+}
+
+.forget-img .vector3 {
+    width: 22.948px;
+    height: 22.948px;
+    position: absolute;
+    top: 33%;
+    left: 18%;
+}
+
+.forget-img .vector4 {
+    width: 15.407px;
+    height: 15.407px;
+    position: absolute;
+    top: 10%;
+    right: 30%;
+}
+
+.forget-img .vector5 {
+    width: 15.407px;
+    height: 15.407px;
+    position: absolute;
+    top: 30%;
+    right: 33%;
+}
+
+.forget-img .vector6 {
+    width: 16.361px;
+    height: 16.361px;
+    position: absolute;
+    top: 10%;
+    left: 30%;
+}

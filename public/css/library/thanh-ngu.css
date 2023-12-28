@@ -1,0 +1,212 @@
+main {
+    position: relative;
+}
+
+main img {
+    width: 100%;
+    height: 730px;
+}
+
+.idiom {
+    width: 100%;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.idiom__wrapper {
+    max-width: 1400px;
+    width: 100%;
+    padding: 0 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.idiom__carousel {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: calc((100% / 3) - 12px);
+    gap: 16px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    scrollbar-width: 0;
+}
+
+.idiom__carousel::-webkit-scrollbar {
+    display: none;
+}
+
+.idiom__carousel.dragging {
+    scroll-snap-type: none;
+    scroll-behavior: auto;
+}
+
+.idiom__carousel.dragging .idiom__card {
+    cursor: grab;
+    user-select: none;
+}
+
+.idiom__card {
+    scroll-snap-align: start;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.idiom__image img{
+    width: 350px;
+    height: 350px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.idiom__wrapper i {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #C9E6C0;
+    color: #fff;
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+    line-height: 50px;
+    position: absolute;
+    top: 50%;
+    cursor: pointer;
+}
+
+.idiom__wrapper i:first-child {
+    left: -22px;
+}
+
+.idiom__wrapper i:last-child {
+    right: -22px;
+}
+
+@media screen and (max-width: 1170px) {
+
+    .idiom__wrapper {
+        max-width: 800px;
+    }
+
+    .idiom__carousel {
+        grid-auto-columns: calc((100% / 2) - 9px);
+    }
+
+    .idiom__wrapper i:first-child {
+        width: 50px;
+        height: 50px;
+        line-height: 50px;
+        font-size: 30px;
+        left: -50px;
+    }
+
+    .idiom__wrapper i:last-child {
+        width: 50px;
+        height: 50px;
+        line-height: 50px;
+        font-size: 30px;
+        right: -20px;
+    }
+}
+
+@media screen and (min-width: 769px) and (max-width: 1025px) {
+
+    .idiom__wrapper {
+        max-width: 700px;
+    }
+
+    .idiom__carousel {
+        grid-auto-columns: calc((100% / 2) - 9px);
+    }
+
+    .idiom__card {
+        width: 300px;
+    }
+
+    .idiom__image img {
+        width: 280px;
+    }
+
+    .idiom__wrapper i:first-child {
+        width: 50px;
+        height: 50px;
+        line-height: 50px;
+        font-size: 30px;
+        left: -20px;
+    }
+
+    .idiom__wrapper i:last-child {
+        width: 50px;
+        height: 50px;
+        line-height: 50px;
+        font-size: 30px;
+        right: -20px;
+    }
+}
+
+@media screen and (max-width: 769px) {
+
+    .idiom__wrapper {
+        max-width: 400px;
+    }
+
+    .idiom__carousel {
+        grid-auto-columns: 100%;
+    }
+
+    .idiom__wrapper i:first-child {
+        left: -30px;
+    }
+
+    .idiom__wrapper i:last-child {
+        right: -30px;
+    }
+}
+
+@media screen and (max-width: 481px) {
+    .idiom__wrapper {
+        max-width: 250px;
+        padding: 0;
+    }
+
+    .idiom__carousel {
+        grid-auto-columns: 100%;
+    }
+
+    .idiom__card {
+        height: 300px;
+    }
+
+    .idiom__image img {
+        width: 200px;
+        height: 200px;
+    }
+
+    .idiom__wrapper i:first-child {
+        left: -15px;
+        width: 30px;
+        height: 30px;
+        line-height: 30px;
+        font-size: 20px;
+    }
+
+    .idiom__wrapper i:last-child {
+        right: -15px;
+        width: 30px;
+        height: 30px;
+        line-height: 30px;
+        font-size: 20px;
+    }
+}

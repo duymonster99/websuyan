@@ -1,0 +1,91 @@
+main img {
+    width: 100%;
+    height: 730px;
+}
+
+.vocab {
+    padding-top: 50px;
+    padding-bottom: 50px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.vocab__carousel {
+    width: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.vocab__card {
+    gap: 10px;
+}
+
+.vocab__card img {
+    width: 300px;
+    height: 300px;
+    border-radius: 8px;
+}
+
+
+@media screen and (max-width: 1170px) {
+    .vocab__card img {
+        width: 280px;
+        height: 280px;
+        border-radius: 8px;
+    }
+}
+
+@media screen and (min-width: 769px) and (max-width: 1025px) {
+    .vocab__card img {
+        width: 250px;
+        height: 250px;
+        border-radius: 8px;
+    }
+
+}
+
+@media screen and (max-width: 769px) {
+
+
+}
+
+@media screen and (max-width: 481px) {
+    .vocab__wrapper {
+        max-width: 250px;
+        padding: 0;
+    }
+
+    .vocab__carousel {
+        grid-auto-columns: 100%;
+    }
+
+    .vocab__card {
+        height: 300px;
+    }
+
+    .vocab__image img {
+        width: 200px;
+        height: 200px;
+    }
+
+    .vocab__wrapper i:first-child {
+        left: -15px;
+        width: 30px;
+        height: 30px;
+        line-height: 30px;
+        font-size: 20px;
+    }
+
+    .vocab__wrapper i:last-child {
+        right: -15px;
+        width: 30px;
+        height: 30px;
+        line-height: 30px;
+        font-size: 20px;
+    }
+}
+

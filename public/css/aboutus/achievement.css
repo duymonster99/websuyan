@@ -1,0 +1,80 @@
+
+
+main .bg {
+    width: 100%;
+    height: 500px;
+    animation: fadeBanner 0.9s ease-out;
+}
+
+@keyframes fadeBanner {
+    0% {
+        transform: translateY(100%);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+.achievement {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 95%;
+    padding-top: 50px;
+    margin: auto;
+}
+
+.achievement__title {
+    width: 504px;
+    height: 74px;
+    background: #fff;
+    border-radius: 8px;
+    font-size: 36px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    margin-bottom: 20px;
+}
+
+.achievement__wrapper {
+    width: 100%;
+}
+
+.achievement__carousel {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 40px;
+    padding: 0;
+}
+
+.achievement__card {
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.achievement__name {
+    width: 300px;
+    height: 55px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #C9E6C0;
+    border-radius: 8px;
+    font-size: 20px;
+    font-weight: 400;
+    margin-bottom: 20px;
+    background: #fff;
+}
+
+.achievement__image img{
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+}

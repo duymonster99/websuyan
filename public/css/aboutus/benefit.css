@@ -1,0 +1,136 @@
+
+
+main .bg {
+    width: 100%;
+    height: 500px;
+    animation: fadeBanner 0.9s ease-out;
+}
+
+@keyframes fadeBanner {
+    0% {
+        transform: translateY(100%);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+@keyframes zoomIN {
+    0% {
+        transform: scale(0);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes fadeRight {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+.benefits {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.benefits__title {
+    width: 504px;
+    height: 74px;
+    background: #fff;
+    border-radius: 8px;
+    font-size: 36px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    animation: zoomIN 0.9s ease-out;
+}
+
+.benefits__wrapper {
+    max-width: 90%;
+    width: 100%;
+    padding: 0 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.benefits__carousel {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 50px;
+}
+
+.benefits__carousel::-webkit-scrollbar {
+    display: none;
+}
+
+.benefits__card {
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.benefits__card:nth-child(1) {
+    animation: fadeRight 0.9s ease-out;
+}
+
+@keyframes fadeLeft {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+.benefits__card:nth-child(3) {
+    animation: fadeLeft 0.9s ease-out;
+}
+
+@keyframes fadeUp {
+    0% {
+        transform: translateY(-100%);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+.benefits__card:nth-child(2) {
+    animation: fadeUp 0.9s ease-out;
+}
+
+.benefits__name {
+    width: 300px;
+    height: 55px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #C9E6C0;
+    border-radius: 8px;
+    font-size: 20px;
+    font-weight: 400;
+    margin-bottom: 20px;
+    background: #fff;
+}
+
+.benefits__image img {
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+}
