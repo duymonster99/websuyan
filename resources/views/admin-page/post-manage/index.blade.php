@@ -13,6 +13,8 @@
                     <thead class="thead-dark">
                         <tr>
                             <th>STT</th>
+                            <th>Banner</th>
+                            <th>Status Banner</th>
                             <th>Menu Level 2</th>
                             <th style="max-width: 150px">Title</th>
                             <th>Image</th>
@@ -33,6 +35,15 @@
                                         <input type="submit" value="+" data-id="{{ $item->id }}"
                                             data-url="{{ route('post.increase.proc') }}" class="increase"
                                             style="background: transparent; border: none">
+                                    </td>
+                                    <td>{{ $item->banner }}</td>
+                                    <td style="width: 150px">
+                                        <select class="form-select status_banner bg-light" data-id="{{ $item->id }}"
+                                            data-url="{{ route('post.proc.home') }}">
+                                            <option value="{{ $item->status_home }}">{{ $item->status_home }}</option>
+                                            <option value="None">None</option>
+                                            <option value="Show Home">Show Home</option>
+                                        </select>
                                     </td>
                                     <td>{{ $item->menu2 }}</td>
                                     <td class="text-truncate" style="max-width: 150px">{{ $item->title }}</td>
@@ -169,6 +180,8 @@
                     <thead class="thead-dark">
                         <tr>
                             <th>STT</th>
+                            <th>Banner</th>
+                            <th>Status Banner</th>
                             <th style="max-width: 150px">Title</th>
                             <th>Image</th>
                             <th style="max-width: 150px">Status Home</th>
@@ -188,6 +201,15 @@
                                         <input type="submit" value="+" data-id="{{ $item->id }}"
                                             data-url="{{ route('post.increase.sche') }}" class="increase"
                                             style="background: transparent; border: none">
+                                    </td>
+                                    <td><img src="{{ asset($item->image) }}" alt="" style="width: 100px"></td>
+                                    <td style="width: 150px">
+                                        <select class="form-select status_banner bg-light" data-id="{{ $item->id }}"
+                                            data-url="{{ route('status.sche.banner') }}">
+                                            <option value="{{ $item->status_banner }}">{{ $item->status_banner }}</option>
+                                            <option value="none">None</option>
+                                            <option value="show">Show</option>
+                                        </select>
                                     </td>
                                     <td class="text-truncate" style="max-width: 150px">{{ $item->title }}</td>
                                     <td>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Menu1;
 use App\Models\Slider;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
@@ -12,62 +13,29 @@ class SliderController extends Controller
 {
     public function index()
     {
-        $slider_home = DB::table('sliders')
-        ->whereNull('menu1_id')
-        ->get();
-
-        $slider_about = DB::table('sliders')
-        ->join('menu1s', 'sliders.menu1_id', '=', 'menu1s.id')
-        ->join('menu2s', 'sliders.menu2_id', '=', 'menu2s.id')
-        ->select('sliders.*', 'menu1s.menu1', 'menu2s.menu2')
-        ->where('menu1s.menu1', '=', 'Giới thiệu')
-        ->get();
-
-        $slider_project = DB::table('sliders')
-        ->join('menu1s', 'sliders.menu1_id', '=', 'menu1s.id')
-        ->join('menu2s', 'sliders.menu2_id', '=', 'menu2s.id')
-        ->join('menu3s', 'sliders.menu3_id', '=', 'menu3s.id')
-        ->select('sliders.*', 'menu1s.menu1', 'menu2s.menu2', 'menu3s.menu3')
-        ->where('menu1s.menu1', '=', 'Khóa học')
-        ->get();
-
-        $slider_sche = DB::table('sliders')
-        ->join('menu1s', 'sliders.menu1_id', '=', 'menu1s.id')
+        $slider = DB::table('sliders')
+        ->leftJoin('menu1s', 'sliders.menu1_id', '=', 'menu1s.id')
         ->select('sliders.*', 'menu1s.menu1')
-        ->where('menu1s.menu1', '=', 'Lịch khai giảng')
-        ->get();
-
-
-        $slider_lib = DB::table('sliders')
-        ->join('menu1s', 'sliders.menu1_id', '=', 'menu1s.id')
-        ->join('menu2s', 'sliders.menu2_id', '=', 'menu2s.id')
-        ->select('sliders.*', 'menu1s.menu1', 'menu2s.menu2')
-        ->where('menu1s.menu1', '=', 'Thư viện')
-        ->get();
-
-
-        $slider_emp = DB::table('sliders')
-        ->join('menu1s', 'sliders.menu1_id', '=', 'menu1s.id')
-        ->select('sliders.*', 'menu1s.menu1')
-        ->where('menu1s.menu1', '=', 'Tuyển dụng')
         ->get();
 
         return view("admin-page.slider.index",
-        compact('slider_home', 'slider_project', 'slider_about', 'slider_sche', 'slider_lib', 'slider_emp'));
+        compact('slider'));
     }
 
-    public function create_home()
+    public function create()
     {
-        return view("admin-page.slider.home.add");
+        $menu = Menu1::where('menu1', '=', 'Khóa học')->get();
+        return view("admin-page.slider.project.add", compact('menu'));
     }
 
-    public function store_home(Request $request)
+    public function store(Request $request)
     {
         $request->validate([
-            "image" => "bail|image|mimes:jpeg,png,gif,svg|max:2048",
+            "image" => "bail|image|mimes:jpeg,png,gif,svg|max:100000",
         ]);
 
         $slider_home = new Slider();
+        $slider_home->menu1_id = $request->input('menu');
         if ($request->hasFile('image')) {
             $filename = $request->image->getClientOriginalName();
             $destinationPath = public_path('img/slider');
@@ -77,22 +45,25 @@ class SliderController extends Controller
             $slider_home->save();
         }
 
+        Toastr::success('Thêm banner thành công');
         return redirect()->route('slider.manage');
     }
 
-    public function edit_home($id)
+    public function edit($id)
     {
         $slider = Slider::find($id);
-        return view("admin-page.slider.home.edit", compact("slider"));
+        $menu = Menu1::where('menu1', '=', 'Khóa học')->get();
+        return view("admin-page.slider.project.edit", compact("slider", "menu"));
     }
 
-    public function update_home(Request $request, $id)
+    public function update(Request $request, $id)
     {
         $request->validate([
             "image" => "bail|image|mimes:jpeg,png,gif,svg|max:2048",
         ]);
 
         $slider = Slider::find($id);
+        $slider->menu1_id = $request->input('menu');
         if ($request->hasFile("image")) {
             $existingImage = public_path($slider->image);
             if (File::exists($existingImage)) {
@@ -108,7 +79,7 @@ class SliderController extends Controller
         return redirect()->route("slider.manage");
     }
 
-    public function delete_home($id)
+    public function delete($id)
     {
         $slider = Slider::find($id);
         if ($slider != null) {
@@ -126,5 +97,65 @@ class SliderController extends Controller
         }
         Toastr::error('Không tìm thấy slider để xóa');
         return redirect()->route("");
+    }
+
+    public function change_status(Request $request)
+    {
+        $data = $request->all();
+        $id = $data['id'];
+        $status_banner = $data['status_banner'];
+
+        $post = Slider::find($id);
+
+        if(isset($post))
+        {
+            $post->status = $status_banner;
+            $post->save();
+        }
+
+        Toastr::success('Cập nhật thành công');
+        return response()->json([
+            'data'=>$data,
+        ]);
+    }
+
+    public function change_decrease_stt(Request $request)
+    {
+        $data = $request->all();
+
+        $slider = Slider::find($data['id']);
+
+        if(isset($slider))
+        {
+            $slider->stt -= 1;
+            $slider->save();
+        }
+
+        $stt = $slider->stt;
+
+        Toastr::success('Cập nhật thành công');
+        return response()->json([
+            'data_slider' => $stt,
+        ]);
+    }
+
+    public function change_increase_stt(Request $request)
+    {
+        $data = $request->all();
+
+        $slider = Slider::find($data['id']);
+
+        if(isset($slider))
+        {
+            $slider->stt += 1;
+            $slider->save();
+        }
+
+        $stt = $slider->stt;
+
+        Toastr::success('Cập nhật thành công');
+        return response()->json([
+            'data_slider' => $stt,
+        ]);
     }
 }

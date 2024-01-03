@@ -22,7 +22,8 @@ class ScheduleOpenningController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            "image"=> "bail|image|mimes:jpeg,png,gif,svg,jpg|max:2048",
+            "image"=> "bail|image|mimes:jpeg,png,gif,svg,jpg|max:100000",
+            "image_banner"=> "bail|image|mimes:jpeg,png,gif,svg,jpg|max:100000",
         ]);
 
         $post = Post::create([
@@ -30,7 +31,8 @@ class ScheduleOpenningController extends Controller
             'menu1_id' => $request->menu_parent,
             'title' => $request->title,
             'meta_description' => $request->description,
-            'content1' => $request->content,
+            'appendix' => $request->appendix,
+            'content' => $request->content,
         ]);
 
         if ($request->hasFile('image')) {
@@ -39,6 +41,15 @@ class ScheduleOpenningController extends Controller
             $request->image->move($destinationPath, $filename);
             $imagePath = 'img-schedule/' .$filename;
             $post->image = $imagePath;
+            $post->save();
+        }
+
+        if ($request->hasFile('image_banner')) {
+            $filename = $request->image_banner->getClientOriginalName();
+            $destinationPath = public_path('img-schedule');
+            $request->image_banner->move($destinationPath, $filename);
+            $imagePath = 'img-schedule/' .$filename;
+            $post->banner = $imagePath;
             $post->save();
         }
 
@@ -56,13 +67,15 @@ class ScheduleOpenningController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            "image" => "bail|image|mimes:jpeg,png,gif,svg|max:2048",
+            "image" => "bail|image|mimes:jpeg,png,gif,svg|max:100000",
+            "image_banner" => "bail|image|mimes:jpeg,png,gif,svg|max:100000",
         ]);
 
         $post = Post::find($id);
         $post->title = $request->input('title');
         $post->meta_description = $request->input('description');
-        $post->content1 = $request->input('content');
+        $post->content = $request->input('content');
+        $post->appendix = $request->input('appendix');
         $post->save();
 
         // xu ly image
@@ -74,6 +87,17 @@ class ScheduleOpenningController extends Controller
             $imageName = $request->image->getClientOriginalName();
             $request->image->move(public_path("img-schedule"), $imageName);
             $post->image = "img-schedule/" . $imageName;
+            $post->save();
+        }
+        // xu ly banner
+        if ($request->hasFile("image_banner")) {
+            $existingImage = public_path($post->banner);
+            if (File::exists($existingImage)) {
+                File::delete($existingImage);
+            }
+            $imageName = $request->image_banner->getClientOriginalName();
+            $request->image_banner->move(public_path("img-schedule"), $imageName);
+            $post->banner = "img-schedule/" . $imageName;
             $post->save();
         }
 
@@ -132,6 +156,26 @@ class ScheduleOpenningController extends Controller
         if(isset($post))
         {
             $post->status_page = $status_page;
+            $post->save();
+        }
+
+        Toastr::success('Cập nhật thành công');
+        return response()->json([
+            'data'=>$data,
+        ]);
+    }
+
+    public function change_status_banner(Request $request)
+    {
+        $data = $request->all();
+        $id = $data['id'];
+        $status_banner = $data['status_banner'];
+
+        $post = Post::find($id);
+
+        if(isset($post))
+        {
+            $post->status_banner = $status_banner;
             $post->save();
         }
 

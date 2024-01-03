@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tiếng Trung SuYan</title>
     <!-- ! icon -->
-    <link rel="icon" type="image/x-icon" href="{{asset('img/logo_new.png')}}">
+    <link rel="icon" type="image/x-icon" href="{{ asset('img/logo_new.png') }}">
     <!-- !Style CSS -->
     <link rel="stylesheet" href="public/css/inc/header.css">
     <link rel="stylesheet" href="public/css/inc/footer.css">
@@ -29,6 +29,11 @@
     <link rel="stylesheet" href="{{ asset('css/layout/footer.css') }}">
     <link rel="stylesheet" href="{{ asset('css/bootstrap/bootstrap.min.css') }}">
     <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
+
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.css" />
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.css" />
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
 
@@ -120,8 +125,8 @@
         <div id="header">
             <!-- logo -->
             <div class="logo">
-                <a href="{{route('user.home')}}" id="home">
-                    <img src="{{asset('img/logo_new.png')}}" alt width="60px" height="60px">
+                <a href="{{ route('user.home') }}" id="home">
+                    <img src="{{ asset('img/logo_new.png') }}" alt width="60px" height="60px">
                     <span>Tiếng Trung SuYan</span>
                 </a>
             </div>
@@ -136,23 +141,23 @@
                         <i class="fa-solid fa-chevron-down"></i>
                     </div>
                     <div class="list-item__expand-procedure">
-                        <a href="{{route('user.aboutus')}}">
+                        <a href="{{ route('user.aboutus') }}">
                             Về trung tâm
                             <!-- <i class="fa-solid fa-angle-right"></i> -->
                         </a>
-                        <a href="{{route('user.benefit')}}">
+                        <a href="{{ route('user.benefit') }}">
                             Quyền lợi của học viên
                             <!-- <i class="fa-solid fa-angle-right"></i> -->
                         </a>
-                        <a href="{{route('user.achievement')}}">
+                        <a href="{{ route('user.achievement') }}">
                             Thành tích học viên
                             <!-- <i class="fa-solid fa-angle-right"></i> -->
                         </a>
-                        <a href="{{route('user.review')}}">
+                        <a href="{{ route('user.review') }}">
                             Review từ học viên
                             <!-- <i class="fa-solid fa-angle-right"></i> -->
                         </a>
-                        <a href="{{route('user.teacher')}}">
+                        <a href="{{ route('user.teacher') }}">
                             Giảng viên
                             <!-- <i class="fa-solid fa-angle-right"></i> -->
                         </a>
@@ -163,7 +168,7 @@
                 <div class="list-item">
                     <i class="fa-solid fa-angle-left"></i>
                     <div class="list-item__project">
-                        <a href="{{route('user.project')}}">
+                        <a href="{{ route('user.project') }}">
                             Khóa học
                         </a>
                         <i class="fa-solid fa-chevron-down"></i>
@@ -175,13 +180,13 @@
                                 <span>Khóa học online</span>
                                 <i class="fa-solid fa-angle-right"></i>
                                 <div class="expand__project-onl">
-                                    <a>Sơ cấp HSK0 - HSK2</a>
-                                    <a>HSK3</a>
-                                    <a>HSK4</a>
-                                    <a>HSK5</a>
-                                    <a>HSK6</a>
-                                    <a>Khẩu ngữ</a>
-                                    <a>1-1</a>
+                                    <a href="{{route('user.project.h2')}}">Sơ cấp HSK0 - HSK2</a>
+                                    <a href="{{route('user.project.h3')}}">HSK3</a>
+                                    <a href="{{route('user.project.h4')}}">HSK4</a>
+                                    <a href="{{route('user.project.h5')}}">HSK5</a>
+                                    <a href="{{route('user.project.h6')}}">HSK6</a>
+                                    <a href="{{route('user.project.kk')}}">Khẩu ngữ</a>
+                                    <a href="{{route('user.project.11')}}">1-1</a>
                                 </div>
                             </div>
                         </div>
@@ -191,13 +196,7 @@
                                 Khóa học offline
                                 <i class="fa-solid fa-angle-right"></i>
                                 <div class="expand__project-off">
-                                    <a href>Sơ cấp HSK0 - HSK2</a>
-                                    <a href>HSK3</a>
-                                    <a href>HSK4</a>
-                                    <a href>HSK5</a>
-                                    <a href>HSK6</a>
-                                    <a href>Khẩu ngữ</a>
-                                    <a href>1-1</a>
+                                    <a href="{{route('user.project.hsk2.off')}}">Sơ cấp HSK0 - HSK2</a>
                                 </div>
                             </div>
                         </div>
@@ -210,7 +209,7 @@
                 <!-- khai giảng -->
                 <div class="list-item">
                     <div>
-                        <a href="{{route('user.lich')}}">
+                        <a href="{{ route('user.lich') }}">
                             Lịch khai giảng
                         </a>
                     </div>
@@ -224,19 +223,19 @@
                         <i class="fa-solid fa-chevron-down"></i>
                     </div>
                     <div class="list-item__expand-library">
-                        <a href="{{route('user.vocab')}}">Từ vựng Tiếng Trung
+                        <a href="{{ route('user.vocab') }}">Từ vựng Tiếng Trung
                             <!-- <i class="fa-solid fa-angle-right"></i> -->
                         </a>
-                        <a href="{{route('user.grammar')}}">Ngữ pháp Tiếng Trung
+                        <a href="{{ route('user.grammar') }}">Ngữ pháp Tiếng Trung
                             <!-- <i class="fa-solid fa-angle-right"></i> -->
                         </a>
-                        <a href="{{route('user.thanh.ngu')}}">Thành ngữ Tiếng Trung
+                        <a href="{{ route('user.thanh.ngu') }}">Thành ngữ Tiếng Trung
                             <!-- <i class="fa-solid fa-angle-right"></i> -->
                         </a>
-                        <a href="{{route('user.duhoc')}}">Du học Trung Quốc
+                        <a href="{{ route('user.duhoc') }}">Du học Trung Quốc
                             <!-- <i class="fa-solid fa-angle-right"></i> -->
                         </a>
-                        <a href="{{route('user.thi.hsk')}}">Kinh nghiệm thi HSK
+                        <a href="{{ route('user.thi.hsk') }}">Kinh nghiệm thi HSK
                             <!-- <i class="fa-solid fa-angle-right"></i> -->
                         </a>
                     </div>
@@ -245,14 +244,14 @@
                 <!-- Employ -->
                 <div class="list-item">
                     <div>
-                        <a href="{{route('user.employ')}}">Tuyển dụng</a>
+                        <a href="{{ route('user.employ') }}">Tuyển dụng</a>
                     </div>
                 </div>
 
                 <!-- Contact -->
                 <div class="list-item">
                     <div>
-                        <a href="{{route('user.contact')}}">Liên hệ</a>
+                        <a href="{{ route('user.contact') }}">Liên hệ</a>
                     </div>
                 </div>
 
@@ -266,11 +265,12 @@
 
                 @if (session('accountLogin'))
                     <div class="dropdown">
-                        <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle"
+                        <a href="#"
+                            class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle"
                             data-bs-toggle="dropdown" aria-expanded="false">
                             <img src="https://github.com/mdo.png" alt="" width="32" height="32"
                                 class="rounded-circle me-2">
-                            <strong>{{session('accountLogin')['fullname']}}</strong>
+                            <strong>{{ session('accountLogin')['fullname'] }}</strong>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
                             <li><a class="dropdown-item" href="#">New project...</a></li>
@@ -279,13 +279,13 @@
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="{{route('acc.logout')}}">Sign out</a></li>
+                            <li><a class="dropdown-item" href="{{ route('acc.logout') }}">Sign out</a></li>
                         </ul>
                     </div>
                 @else
                     <!-- Login -->
                     <div class="list-item login">
-                        <a href="{{route('user.login.form')}}">
+                        <a href="{{ route('user.login.form') }}">
                             <button class="signin">
                                 Đăng nhập
                             </button>
@@ -377,14 +377,14 @@
     <div id="fb-root"></div>
 
 </body>
-
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v17.0"
     nonce="QbdBG7IO"></script>
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
     AOS.init();
 </script>
-<script src="{{asset('js/bootstrap.bundle.min.js')}}"></script>
+<script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
 
 <script src="js/header.js"></script>
 <!-- Tiny MCE -->
@@ -396,12 +396,14 @@
     import Swiper from 'https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.mjs'
 </script>
 
-<script src="{{asset('js/swiper.js')}}"></script>
+<script src="{{ asset('js/swiper.js') }}"></script>
 
-<script src="{{asset('js/carousel.js')}}"></script>
-<script src="{{asset('js/login.js')}}"></script>
+<script src="{{ asset('js/carousel.js') }}"></script>
+<script src="{{ asset('js/login.js') }}"></script>
+<script src="{{ asset('js/slick-slider.js') }}"></script>
 
 <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
-        {!! Toastr::message() !!}
+{!! Toastr::message() !!}
+
 
 </html>

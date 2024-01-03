@@ -14,8 +14,6 @@ return new class extends Migration
         Schema::create('sliders', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('menu1_id')->nullable();
-            $table->unsignedBigInteger('menu2_id')->nullable();
-            $table->unsignedBigInteger('menu3_id')->nullable();
             $table->string('stt')->nullable();
             $table->string('image')->nullable();
             $table->string('status')->nullable();
@@ -23,8 +21,6 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign("menu1_id")->references("id")->on("menu1s")->onDelete("cascade");
-            $table->foreign("menu2_id")->references("id")->on("menu2s")->onDelete("cascade");
-            $table->foreign("menu3_id")->references("id")->on("menu3s")->onDelete("cascade");
         });
     }
 

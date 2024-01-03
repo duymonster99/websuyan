@@ -8,23 +8,28 @@
         <div class="home__banner" style="z-index: 0">
             <div id="carouselExampleIndicators" class="carousel slide carousel-fade" data-bs-ride="carousel">
                 <div class="carousel-indicators">
-                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+                    @if (isset($banner))
+                        @foreach ($banner as $index => $item)
+                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{$index}}"
+                                class="{{ $index === 0 ? 'active' : '' }}"
+                                aria-current="{{ $index === 0 ? 'true' : '' }}" aria-label="Slide {{$index++}}"></button>
+                        @endforeach
+                    @endif
+                    {{-- <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
                         aria-current="true" aria-label="Slide 1"></button>
                     <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
                         aria-label="Slide 2"></button>
                     <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
-                        aria-label="Slide 3"></button>
+                        aria-label="Slide 3"></button> --}}
                 </div>
                 <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img src="image/project/banner.jpg" class="d-block w-100" alt="...">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="image/du-hoc/banner.jpg" class="d-block w-100" alt="...">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="image/Student_Benefits/background.jpg" class="d-block w-100" alt="...">
-                    </div>
+                    @if (isset($banner))
+                        @foreach ($banner as $index => $item)
+                            <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
+                                <img src="{{ $item->image }}" class="d-block w-100" alt="...">
+                            </div>
+                        @endforeach
+                    @endif
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
                     data-bs-slide="prev">
@@ -45,7 +50,7 @@
                 @foreach ($post as $item)
                     <div data-aos="fade-up-right" data-aos-duration="900" class="home-content_title">
                         <div class="home-content_title--avt">
-                            {{-- <img src="{{ asset($item->images[0]->path) }}" alt=""> --}}
+                            <img style="border-radius: 50%" src="{{ asset($item->image) }}" alt="">
                         </div>
 
                         <div class="home-content_title--ttl">
@@ -60,7 +65,6 @@
                     </div>
                 @endforeach
             @endif
-
         </div>
 
         <!-- curriculum -->
@@ -126,14 +130,13 @@
                     <!-- Additional required wrapper -->
                     <div class="swiper-wrapper">
                         <!-- Slides -->
-                        @if (isset($post_review))
-                            @foreach ($post_review as $item)
+                        @if (isset($post_rv))
+                            @foreach ($post_rv as $item)
                                 <div class="swiper-slide">
                                     <img src="{{ asset($item->image) }}" alt="">
                                 </div>
                             @endforeach
                         @endif
-
                     </div>
                     <!-- If we need pagination -->
                     <div class="swiper-pagination"></div>
@@ -160,10 +163,10 @@
                         @foreach ($post_teacher as $item)
                             <li class="home-profile-teacher__card">
                                 <div class="home-profile-teacher__name">
-                                    {{$item->title}}
+                                    {{ $item->title }}
                                 </div>
                                 <div class="home-profile-teacher__image">
-                                    <img src="{{asset($item->image)}}" alt="">
+                                    <img src="{{ asset($item->image) }}" alt="">
                                 </div>
                             </li>
                         @endforeach
@@ -177,12 +180,14 @@
         <!-- register form -->
         <div class="registerForm container-fluid d-flex justify-content-evenly align-items-center flex-wrap mb-5"
             style="background: #c9e6c0">
-            <div data-aos="zoom-out-right" data-aos-duration="900"
-                class="registerForm__image h-35 d-flex justify-content-center pt-3">
-                <a href="lich-khai-giang.html">
-                    <img src="image/home/dang-ky.jpg" class="img-fluid h-100" alt="">
-                </a>
-            </div>
+            @if (isset($post_sche))
+                <div data-aos="zoom-out-right" data-aos-duration="900"
+                    class="registerForm__image h-35 d-flex justify-content-center pt-3">
+                    <a href="{{ route('user.lich') }}">
+                        <img src="{{ asset($post_sche->image) }}" class="img-fluid h-100" alt="">
+                    </a>
+                </div>
+            @endif
 
             <div data-aos="zoom-out-left" data-aos-duration="900"
                 class="d-flex flex-column justify-content-center align-items-center mt-3" style="height: 50%">
@@ -233,17 +238,17 @@
 
         <!-- media -->
         <!-- <div data-aos="flip-down" data-aos-duration="900" class="media_wrapper">
-                <div class="media__title">
-                    <span></span>
-                    <span class="title">TRUYỀN THÔNG</span>
-                    <span></span>
-                </div>
+                                                    <div class="media__title">
+                                                        <span></span>
+                                                        <span class="title">TRUYỀN THÔNG</span>
+                                                        <span></span>
+                                                    </div>
 
-                <div class="media__content">
-                    <img src="image/Procedure/truyen_thong.jpg" alt="">
-                    <img src="image/Procedure/truyen_thong.jpg" alt="">
-                    <img src="image/Procedure/truyen_thong.jpg" alt="">
-                </div>
-            </div> -->
+                                                    <div class="media__content">
+                                                        <img src="image/Procedure/truyen_thong.jpg" alt="">
+                                                        <img src="image/Procedure/truyen_thong.jpg" alt="">
+                                                        <img src="image/Procedure/truyen_thong.jpg" alt="">
+                                                    </div>
+                                                </div> -->
     </main>
 @endsection

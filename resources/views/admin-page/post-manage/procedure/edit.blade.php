@@ -33,23 +33,18 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="content1" class="form-label">Content 1:</label>
-                    <textarea name="content1" class="tinymce" id="tinymce">{{ $post->content1 }}</textarea>
+                    <label for="appendix" class="form-label">Appendix: (bài viết này hiển thị lên các box xanh)</label>
+                    <textarea name="appendix" class="tinymce" id="tinymce">{{$post->appendix}}</textarea>
                 </div>
 
                 <div class="mb-3">
-                    <label for="content2" class="form-label">Content2:</label>
-                    <textarea name="content2" class="tinymce" id="tinymce">{{ $post->content2 }}</textarea>
-                </div>
-
-                <div class="mb-3">
-                    <label for="content3" class="form-label">Content3:</label>
-                    <textarea name="content3" class="tinymce" id="tinymce">{{ $post->content3 }}</textarea>
+                    <label for="content" class="form-label">Content:</label>
+                    <textarea name="content" class="tinymce" id="tinymce">{{ $post->content }}</textarea>
                 </div>
 
                 <div class="mb-3">
                     <label for="image">Current Image:</label>
-                            <img src="{{ asset($post->image) }}" alt="" width="100px" class="img-thumbnail">
+                    <img src="{{ asset($post->image) }}" alt="" width="100px" class="img-thumbnail">
                 </div>
 
                 <div class="mb-3">

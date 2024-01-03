@@ -1,8 +1,11 @@
 @extends('index')
 @section('body')
-<link rel="stylesheet" href="{{asset('css/aboutus/benefit.css')}}">
+    <link rel="stylesheet" href="{{ asset('css/aboutus/benefit.css') }}">
     <main>
-        <img src="image/Student_Benefits/background.jpg" alt="" class="bg">
+        @if (isset($banner))
+            <img src="{{ asset($banner->banner) }}" alt="" class="bg">
+        @endif
+
         <div class="benefits">
             <div class="benefits__title">
                 <span>QUYỀN LỢI HỌC VIÊN</span>
@@ -11,46 +14,26 @@
             <div class="benefits__wrapper">
                 <!-- Yen nhi -->
                 <ul class="benefits__carousel">
-                    <li class="benefits__card">
-                        <div class="benefits__name">Quyền lợi học viên</div>
-                        <div class="benefits__image">
-                            <img src="image/Student_Benefits/benefit.jpg" alt="">
-                        </div>
-                    </li>
-
-                    <!-- Tố Duyên -->
-                    <li class="benefits__card">
-                        <div class="benefits__name">Feedback học viên</div>
-                        <div class="benefits__image">
-                            <img src="image/Student_Benefits/benefit.jpg" alt="">
-                        </div>
-                    </li>
-
-                    <!-- Huyền Trang -->
-                    <li class="benefits__card">
-                        <div class="benefits__name">Quà tặng học viên</div>
-                        <div class="benefits__image">
-                            <img src="image/Student_Benefits/benefit.jpg" alt="">
-                        </div>
-                    </li>
-
-                    <!--  -->
-                    <li class="benefits__card">
-                        <div class="benefits__name">Quyền lợi học viên</div>
-                        <div class="benefits__image">
-                            <img src="image/Student_Benefits/benefit.jpg" alt="">
-                        </div>
-                    </li>
-
-                    <!--  -->
-                    <li class="benefits__card">
-                        <div class="benefits__name">Feedback học viên</div>
-                        <div class="benefits__image">
-                            <img src="image/Student_Benefits/benefit.jpg" alt="">
-                        </div>
-                    </li>
+                    @if (isset($post))
+                        @foreach ($post as $item)
+                            <li class="benefits__card">
+                                <div class="benefits__name">{{ $item->title }}</div>
+                                <div class="benefits__image">
+                                    <img src="{{ asset($item->image) }}" alt="">
+                                </div>
+                            </li>
+                        @endforeach
+                    @endif
                 </ul>
             </div>
+
+            @if (isset($post))
+                @foreach ($post as $item)
+                    <div class="benefits__content">
+                        {!! $item->content2 !!}
+                    </div>
+                @endforeach
+            @endif
         </div>
     </main>
 @endsection

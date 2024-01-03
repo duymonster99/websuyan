@@ -2,7 +2,9 @@
 @section('body')
     <link rel="stylesheet" href="{{ asset('css/aboutus/review.css') }}">
     <main>
-        <img src="image/Student_Benefits/background.jpg" alt class="bg">
+        @if (isset($banner))
+            <img src="{{ asset($banner->banner) }}" alt="" class="bg">
+        @endif
 
         <div class="feel__container">
             <!-- TITLE -->
@@ -14,26 +16,23 @@
                 <!-- Additional required wrapper -->
                 <ul class="feel_slider-wrapper">
                     <!-- Slides -->
-                    <li class="feel_slider_details">
-                        <img src="image/Procedure/feedback1.jpg" alt>
-                    </li>
-                    <li class="feel_slider_details">
-                        <img src="image/Procedure/feedback1.jpg" alt>
-                    </li>
-                    <li class="feel_slider_details">
-                        <img src="image/Procedure/feedback1.jpg" alt>
-                    </li>
-                    <li class="feel_slider_details">
-                        <img src="image/Procedure/feedback1.jpg" alt>
-                    </li>
-                    <li class="feel_slider_details">
-                        <img src="image/Procedure/feedback1.jpg" alt>
-                    </li>
-                    <li class="feel_slider_details">
-                        <img src="image/Procedure/feedback1.jpg" alt>
-                    </li>
+                    @if (isset($post))
+                        @foreach ($post as $item)
+                            <li class="feel_slider_details">
+                                <img src="{{ asset($item->image) }}" alt>
+                            </li>
+                        @endforeach
+                    @endif
                 </ul>
             </div>
+
+            @if (isset($post))
+                @foreach ($post as $item)
+                    <div class="feel_container--content">
+                        {!! $item->content2 !!}
+                    </div>
+                @endforeach
+            @endif
         </div>
     </main>
 @endsection

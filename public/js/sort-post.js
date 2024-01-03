@@ -8,6 +8,7 @@ $(document).ready(function() {
         let spanElement2 = $(`.stt-sche[data-item-id="${itemId}"]`);
         let spanElement3 = $(`.stt-lib[data-item-id="${itemId}"]`);
         let spanElement4 = $(`.stt-emp[data-item-id="${itemId}"]`);
+        let spanElement5 = $(`.stt-slider[data-item-id="${itemId}"]`);
 
         $.ajax({
             type: 'GET',
@@ -20,6 +21,7 @@ $(document).ready(function() {
                 spanElement2.text(response.data_sche);
                 spanElement3.text(response.data_lib);
                 spanElement4.text(response.data_emp);
+                spanElement5.text(response.data_slider);
             },
         });
     });
@@ -35,6 +37,7 @@ $(document).ready(function() {
         let spanElement2 = $(`.stt-sche[data-item-id="${itemId}"]`);
         let spanElement3 = $(`.stt-lib[data-item-id="${itemId}"]`);
         let spanElement4 = $(`.stt-emp[data-item-id="${itemId}"]`);
+        let spanElement5 = $(`.stt-slider[data-item-id="${itemId}"]`);
 
         $.ajax({
             type: 'GET',
@@ -47,6 +50,7 @@ $(document).ready(function() {
                 spanElement2.text(response.data_sche);
                 spanElement3.text(response.data_lib);
                 spanElement4.text(response.data_emp);
+                spanElement5.text(response.data_slider);
             },
         });
     });

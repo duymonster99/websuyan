@@ -19,10 +19,10 @@
 
             <div class="forget_signin--success mt-4">
                 <span style="color: #6B7280;">Can't get email?</span>
-                <a href="" style="text-decoration: none; color: blue">Resubmit</a>
+                <a href="{{route('acc.resubmit.mail')}}" style="text-decoration: none; color: blue">Resubmit</a>
             </div>
 
-            <button type="submit" class="mt-5 forget_button--success">Back Email</button>
+            <a href="{{route('acc.forget')}}" type="submit" class="mt-5 forget_button--success">Back Email</a>
         </div>
     </div>
 @endsection

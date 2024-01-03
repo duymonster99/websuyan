@@ -5,6 +5,10 @@
             <form method="post" enctype="multipart/form-data" action="{{route('store.sche')}}">
                 @csrf
                 <h2>Add new Post</h2>
+                <div class="mb-3">
+                    <label for="image">Banner:</label>
+                    <input type="file" class="form-control" id="image" name="image_banner">
+                </div>
 
                 <div class="mb-3 mt-3">
                     <input type="hidden" name="menu_parent" value="3">
@@ -19,6 +23,11 @@
                 <div class="mb-3">
                     <label for="description" class="form-label">Meta Description:</label>
                     <textarea name="description" class="tinymce" id="tinymce">{{old('description')}}</textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label for="appendix" class="form-label">Appendix: (Nội dung dành cho box xanh)</label>
+                    <textarea name="appendix" class="tinymce" id="tinymce">{{old('appendix')}}</textarea>
                 </div>
 
                 <div class="mb-3">

@@ -15,6 +15,7 @@
     padding: 20px;
     overflow: hidden;
     position: relative;
+    margin: 50px 0;
 }
 
 .login_form--img-header {
@@ -46,10 +47,16 @@
     margin-top: 100px;
 }
 
-.login_form--input i.bi {
+.login_form--input .login_eye {
     position: absolute;
-    top: 50%;
-    right: 2%;
+    right: 5%;
+    top: 25%;
+    transform: translateY(-25%);
+    width: 10px;
+}
+
+.login_form--input i.bi {
+
     color: black;
 }
 

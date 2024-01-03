@@ -14,27 +14,57 @@ class LibraryController extends Controller
 {
     public function show_vocab()
     {
-        return view("user-page.library.vocabulary");
+        $post = DB::table('posts')
+        ->join('menu2s', 'posts.menu2_id', '=', 'menu2s.id')
+        ->where('menu2s.menu2', '=', 'Từ vựng Tiếng Trung')
+        ->orderBy('stt', 'asc')
+        ->get();
+
+        return view("user-page.library.vocabulary", compact('post'));
     }
 
     public function show_grammar()
     {
-        return view("user-page.library.grammar");
+        $post = DB::table('posts')
+        ->join('menu2s', 'posts.menu2_id', '=', 'menu2s.id')
+        ->where('menu2s.menu2', '=', 'Ngữ pháp Tiếng Trung')
+        ->orderBy('stt', 'asc')
+        ->get();
+
+        return view("user-page.library.grammar", compact('post'));
     }
 
     public function show_thi_hsk()
     {
-        return view("user-page.library.thi_hsk");
+        $post = DB::table('posts')
+        ->join('menu2s', 'posts.menu2_id', '=', 'menu2s.id')
+        ->where('menu2s.menu2', '=', 'Kinh nghiệm thi HSK')
+        ->orderBy('stt', 'asc')
+        ->get();
+
+        return view("user-page.library.thi_hsk", compact('post'));
     }
 
     public function show_thanh_ngu()
     {
-        return view("user-page.library.thanh_ngu");
+        $post = DB::table('posts')
+        ->join('menu2s', 'posts.menu2_id', '=', 'menu2s.id')
+        ->where('menu2s.menu2', '=', 'Thành ngữ Tiếng Trung')
+        ->orderBy('stt', 'asc')
+        ->get();
+
+        return view("user-page.library.thanh_ngu", compact('post'));
     }
 
     public function show_duhoc()
     {
-        return view("user-page.library.du_hoc");
+        $post = DB::table('posts')
+        ->join('menu2s', 'posts.menu2_id', '=', 'menu2s.id')
+        ->where('menu2s.menu2', '=', 'Du học Trung Quốc')
+        ->orderBy('stt', 'asc')
+        ->get();
+
+        return view("user-page.library.du_hoc", compact('post'));
     }
 
     public function create()

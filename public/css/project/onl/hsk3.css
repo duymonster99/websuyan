@@ -1,0 +1,148 @@
+@keyframes fadeBanner {
+    0% {
+        transform: translateY(100%);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+.pro-h3__banner img {
+    width: 100%;
+    height: 730px;
+    margin-bottom: 50px;
+    animation: fadeBanner 0.9s ease-out;
+}
+
+.pro-h3__wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    margin-bottom: 50px;
+}
+
+.pro-h3__content {
+    max-width: 80%;
+}
+
+.pro-h3__content--title {
+    height: 64px;
+    font-size: 36px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.pro-h3__content--para1 {
+    height: 150px;
+    background-color: #c9e6c0;
+    border-radius: 8px;
+    text-align: justify;
+    display: flex;
+    align-items: center;
+    padding: 0 30px;
+    font-size: 20px;
+}
+
+.pro-h3__content--para3 {
+    font-size: 20px;
+    text-align: justify;
+}
+
+@media screen and (max-width: 1200px) {
+    .pro-h3__banner img {
+        width: 100%;
+        height: 700px;
+    }
+    .pro-h3__sidebar img {
+        height: 650px;
+    }
+
+    .pro-h3__wrapper {
+        gap: 25px;
+    }
+
+    .pro-h3__content--para1,
+    .pro-h3__content--para2,
+    .pro-h3__content--para3 {
+        font-size: 16px;
+    }
+}
+
+@media screen and (max-width: 1025px) {
+    .pro-h3__info {
+        gap: 50px;
+    }
+
+    .pro-h3__sidebar img {
+        height: 500px;
+    }
+
+    .pro-h3__wrapper {
+        flex-wrap: wrap;
+    }
+}
+
+@media screen and (max-width: 769px) {
+    .pro-h3__banner img {
+        height: 350px;
+    }
+
+    .pro-h3__title {
+        width: 400px;
+    }
+
+    .pro-h3__sidebar img {
+        height: 300px;
+    }
+
+    .pro-h3__wrapper {
+        margin-top: 50px;
+    }
+}
+
+@media screen and (max-width: 481px) {
+    .pro-h3__banner img {
+        height: 200px;
+    }
+
+    .pro-h3__title {
+        width: 280px;
+        height: 50px;
+        font-size: 25px;
+    }
+
+    .pro-h3__info--container {
+        max-width: 250px;
+    }
+
+    .pro-h3__info--title {
+        width: 250px;
+        height: 40px;
+        font-size: 18px;
+    }
+
+    .pro-h3__info--img img {
+        width: 250px;
+        height: 250px;
+    }
+
+    .pro-h3__sidebar img {
+        height: 200px;
+    }
+
+    .pro-h3__wrapper {
+        margin-top: 20px;
+    }
+
+    .pro-h3__content--title {
+        font-size: 35px;
+    }
+
+    .pro-h3__content--para1,
+    .pro-h3__content--para2,
+    .pro-h3__content--para3 {
+        font-size: 12px;
+    }
+}

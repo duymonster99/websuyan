@@ -41,18 +41,13 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="content1" class="form-label">Content1:</label>
-                    <textarea name="content1" class="tinymce" id="tinymce">{{old('content1')}}</textarea>
+                    <label for="appendix" class="form-label">Appendix: (bài viết này hiển thị lên các box xanh)</label>
+                    <textarea name="appendix" class="tinymce" id="tinymce">{{old('appendix')}}</textarea>
                 </div>
 
                 <div class="mb-3">
-                    <label for="content2" class="form-label">Content2:</label>
-                    <textarea name="content2" class="tinymce" id="tinymce">{{old('content2')}}</textarea>
-                </div>
-
-                <div class="mb-3">
-                    <label for="content3" class="form-label">Content3:</label>
-                    <textarea name="content3" class="tinymce" id="tinymce">{{old('content3')}}</textarea>
+                    <label for="content" class="form-label">Content:</label>
+                    <textarea name="content" class="tinymce" id="tinymce">{{old('content')}}</textarea>
                 </div>
 
                 <div class="mb-3">

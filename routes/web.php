@@ -44,6 +44,15 @@ Route::get('/giang-vien', [AboutController::class, 'show_teacher'])->name("user.
 
 // ----------------------------------------------------- Project
 Route::get('/khoa-hoc', [ProjectController::class, 'show_project'])->name("user.project");
+Route::get('/khoa-hoc-hsk2', [ProjectController::class, 'show_project_h2'])->name("user.project.h2");
+Route::get('/khoa-hoc-hsk3', [ProjectController::class, 'show_project_h3'])->name("user.project.h3");
+Route::get('/khoa-hoc-hsk4', [ProjectController::class, 'show_project_h4'])->name("user.project.h4");
+Route::get('/khoa-hoc-hsk5', [ProjectController::class, 'show_project_h5'])->name("user.project.h5");
+Route::get('/khoa-hoc-hsk6', [ProjectController::class, 'show_project_h6'])->name("user.project.h6");
+Route::get('/khoa-hoc-1-kem-1', [ProjectController::class, 'show_project_11'])->name("user.project.11");
+Route::get('/khoa-hoc-hskk', [ProjectController::class, 'show_project_kk'])->name("user.project.kk");
+
+Route::get('/khoa-hoc-hsk2-offline', [ProjectController::class, 'show_project_hsk2_off'])->name("user.project.hsk2.off");
 
 
 // ----------------------------------------------------- Library
@@ -67,10 +76,16 @@ Route::get('/dang-ky', [AccountController::class, 'show_form_signup'])->name("us
 Route::post('/dang-ky', [AccountController::class, 'store'])->name("user.sign-up");
 Route::get('/xac-thuc-tai-khoan/{email}', [AccountController::class, 'verify_account'])->name("user.verify.acc");
 Route::get('/quen-mat-khau', [AccountController::class, 'forget_pass'])->name("acc.forget");
-Route::get('/quen-mat-khau/success', [AccountController::class, 'forget_pass_success'])->name("acc.forget.success");
-Route::get('/nhap-mat-khau-moi', [AccountController::class, 'reset_pass'])->name("acc.reset.pass");
+Route::post('/quen-mat-khau/success', [AccountController::class, 'forget_pass_success'])->name("acc.forget.success");
+Route::get('/nhap-mat-khau-moi/{email}/{token}', [AccountController::class, 'reset_pass'])->name("acc.reset.pass");
+Route::post('/nhap-mat-khau-moi', [AccountController::class, 'new_pass'])->name("acc.new.pass");
+Route::get('/resubmit-email', [AccountController::class, 'resubmit_email'])->name("acc.resubmit.mail");
 Route::get('/dang-xuat', [AccountController::class, 'logout'])->name("acc.logout");
 
+Route::get('auth/google', [AccountController::class, 'redirectGoogle'])->name("acc.login.gg");
+Route::get('/auth/google/callback', [AccountController::class, 'loginGoogle']);
+Route::get('auth/facebook', [AccountController::class, 'redirectFacebook'])->name("acc.login.fb");
+Route::get('/auth/facebook/callback', [AccountController::class, 'loginFacebook']);
 
 
 
@@ -124,7 +139,7 @@ Route::prefix('/admin')->group(function(){
     Route::get('/update-post-project/{id}', [PostProjectController::class, 'edit'])->name("edit.proj");
     Route::put('/update-post-project/{id}', [PostProjectController::class, 'update'])->name("update.proj");
     Route::get('/delete-post-project/{id}', [PostProjectController::class, 'delete'])->name("delete.proj");
-    Route::get('/update-status-home-procject', [PostProjectController::class, 'change_status_home'])->name("status.proj.home");
+    Route::get('/update-status-home-project', [PostProjectController::class, 'change_status_home'])->name("status.proj.home");
     Route::get('/update-status-page-project', [PostProjectController::class, 'change_status_page'])->name("status.proj.page");
     Route::get('/decrease-stt-project', [PostProjectController::class, 'change_decrease_stt'])->name("post.decrease.proj");
     Route::get('/increase-stt-project', [PostProjectController::class, 'change_increase_stt'])->name("post.increase.proj");
@@ -137,6 +152,7 @@ Route::prefix('/admin')->group(function(){
     Route::get('/delete-post-schedule-openning/{id}', [ScheduleOpenningController::class, 'delete'])->name("delete.sche");
     Route::get('/update-status-home-schedule-openning', [ScheduleOpenningController::class, 'change_status_home'])->name("status.sche.home");
     Route::get('/update-status-page-schedule-openning', [ScheduleOpenningController::class, 'change_status_page'])->name("status.sche.page");
+    Route::get('/update-status-banner-schedule-openning', [ScheduleOpenningController::class, 'change_status_banner'])->name("status.sche.banner");
     Route::get('/decrease-stt-schedule-openning', [ScheduleOpenningController::class, 'change_decrease_stt'])->name("post.decrease.sche");
     Route::get('/increase-stt-schedule-openning', [ScheduleOpenningController::class, 'change_increase_stt'])->name("post.increase.sche");
 
@@ -173,18 +189,13 @@ Route::prefix('/admin')->group(function(){
 
     // ------------------------------------------------------------------------------------ SLIDER MANAGE
     Route::get('/slider-manage', [SliderController::class, 'index'])->name("slider.manage");
+    Route::get('/add-slider', [SliderController::class, 'create'])->name("add.slider");
+    Route::post('/add-slider', [SliderController::class, 'store'])->name("store.slider");
+    Route::get('/update-slider/{id}', [SliderController::class, 'edit'])->name("edit.slider");
+    Route::put('/update-slider/{id}', [SliderController::class, 'update'])->name("update.slider");
+    Route::get('/delete-slider/{id}', [SliderController::class, 'delete'])->name("delete.slider");
+    Route::get('/update-status-slider', [SliderController::class, 'change_status'])->name("status.slider");
+    Route::get('/decrease-stt-slider', [SliderController::class, 'change_decrease_stt'])->name("decrease.slider");
+    Route::get('/increase-stt-slider', [SliderController::class, 'change_increase_stt'])->name("increase.slider");
 
-    // slide home
-    Route::get('/add-slider-home', [SliderController::class, 'create_home'])->name("add.slider.home");
-    Route::post('/add-slider-home', [SliderController::class, 'store_home'])->name("store.slider.home");
-    Route::get('/update-slider-home/{id}', [SliderController::class, 'edit_home'])->name("edit.slider.home");
-    Route::put('/update-slider-home/{id}', [SliderController::class, 'update_home'])->name("update.slider.home");
-    Route::get('/delete-slider-home/{id}', [SliderController::class, 'delete_home'])->name("delete.slider.home");
-
-    // slide home
-    Route::get('/add-slider-about', [SliderController::class, 'create_about'])->name("add.slider.about");
-    Route::post('/add-slider-about', [SliderController::class, 'store_about'])->name("store.slider.about");
-    Route::get('/update-slider-about/{id}', [SliderController::class, 'edit_about'])->name("edit.slider.about");
-    Route::put('/update-slider-about/{id}', [SliderController::class, 'update_about'])->name("update.slider.about");
-    Route::get('/delete-slider-about/{id}', [SliderController::class, 'delete_about'])->name("delete.slider.about");
 });

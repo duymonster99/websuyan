@@ -9,6 +9,7 @@ use App\Models\MenuChild;
 use App\Models\MenuLevel3;
 use App\Models\MenuParent;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class MenuManageController extends Controller
 {
@@ -109,7 +110,11 @@ class MenuManageController extends Controller
 
     public function create_level3()
     {
-        $menu2 = Menu2::all();
+        $menu2 = DB::table('menu2s')
+        ->join('menu1s', 'menu2s.menu1_id', '=', 'menu1s.id')
+        ->where('menu1s.menu1', '=', 'Khóa học')
+        ->get();
+
         return view("admin-page.multi-level-menu.add_menu_level3", compact("menu2"));
     }
 

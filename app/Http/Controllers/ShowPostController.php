@@ -31,6 +31,7 @@ class ShowPostController extends Controller
             ->select('posts.*', 'menu1s.menu1')
             ->where('menu1s.menu1', '=', 'Lịch khai giảng')
             ->get();
+        // dd($post_schedule);
 
         $post_lib = DB::table('posts')
             ->join('menu1s', 'posts.menu1_id', '=', 'menu1s.id')

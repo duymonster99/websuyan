@@ -76,9 +76,8 @@ class PostProjectController extends Controller
         $post->menu3_id = $request->input('menu3');
         $post->title = $request->input('title');
         $post->meta_description = $request->input('description');
-        $post->content1 = $request->input('content1');
-        $post->content2 = $request->input('content2');
-        $post->content3 = $request->input('content3');
+        $post->appendix = $request->input('appendix');
+        $post->content = $request->input('content');
         $post->save();
 
         // xu ly image

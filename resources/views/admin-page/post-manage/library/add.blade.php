@@ -36,6 +36,11 @@
                 </div>
 
                 <div class="mb-3">
+                    <label for="appendix" class="form-label">Appendix: (bài viết này hiển thị lên các box xanh)</label>
+                    <textarea name="appendix" class="tinymce" id="tinymce">{{old('appendix')}}</textarea>
+                </div>
+
+                <div class="mb-3">
                     <label for="content" class="form-label">Content:</label>
                     <textarea name="content" class="tinymce" id="tinymce">{{old('content')}}</textarea>
                 </div>

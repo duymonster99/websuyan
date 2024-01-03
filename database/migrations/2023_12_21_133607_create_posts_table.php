@@ -17,11 +17,12 @@ return new class extends Migration
             $table->unsignedBigInteger('menu1_id');
             $table->unsignedBigInteger('menu2_id')->nullable();
             $table->unsignedBigInteger('menu3_id')->nullable();
+            $table->string('banner')->nullable();
+            $table->string('status_banner', 10)->nullable();
             $table->text('title')->nullable();
             $table->text('meta_description')->nullable();
-            $table->text('content1')->nullable();
-            $table->text('content2')->nullable();
-            $table->text('content3')->nullable();
+            $table->text('appendix')->nullable();
+            $table->text('content')->nullable();
             $table->string('image')->nullable();
             $table->string('status_home')->nullable();
             $table->string('status_page')->nullable();

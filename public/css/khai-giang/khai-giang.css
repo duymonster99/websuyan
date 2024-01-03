@@ -4,23 +4,27 @@
     align-items: center;
 } */
 
-main .container {
+main .container-fluid {
+    width: 100%;
     display: flex;
     flex-direction: column;
 }
 
-.container img.banner {
-    width: 60%;
-    height: 600px;
+.main .sche_banner {
+    width: 100%;
+    height: 300px;
+    position: relative;
+    overflow: hidden;
 }
 
 .content {
     width: 100%;
-    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    margin: 50px 0;
 }
 
 .content img {
-    width: 200px;
-    height: 200px;
+    width: 800px;
 }
 

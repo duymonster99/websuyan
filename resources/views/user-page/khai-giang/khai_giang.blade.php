@@ -2,12 +2,22 @@
 @section('body')
     <link rel="stylesheet" href="{{ asset('css/khai-giang/khai-giang.css') }}">
     <main>
-        <div class="container">
-            <!-- <img src="image/home/dang-ky.jpg" alt="" class="banner"> -->
+        <div class="sche_banner">
+            @if (isset($banner))
+                <img src="{{ asset($banner->banner) }}" alt="">
+            @endif
+        </div>
 
-            <div class="content">
-                {{-- <p><?php echo $item['content']; ?></p> --}}
-            </div>
+        <div class="container-fluid">
+
+            @if (isset($post))
+                @foreach ($post as $item)
+                    <div class="content">
+                        <img src="{{ asset($item->image) }}" alt="">
+                        {!! $item->content2 !!}
+                    </div>
+                @endforeach
+            @endif
         </div>
     </main>
 @endsection

@@ -9,7 +9,20 @@ class AdminController extends Controller
 {
     public function dashboard()
     {
-        return view("admin-page.dashboard");
+        if(session('accountLogin'))
+        {
+            $acc_type = session('accountLogin')['acc_type'];
+            if($acc_type == "admin")
+            {
+                return view("admin-page.dashboard");
+            }
+            else {
+                return redirect('/');
+            }
+        }
+        else {
+            return view("account.login");
+        }
     }
 
     public function acc_manage()
