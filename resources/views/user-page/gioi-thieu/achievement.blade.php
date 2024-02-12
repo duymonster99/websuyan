@@ -31,7 +31,7 @@
             @if (isset($post))
                 @foreach ($post as $item)
                     <div class="achievement__content">
-                        {!! $item->content2 !!}
+                        {!! $item->content !!}
                     </div>
                 @endforeach
             @endif

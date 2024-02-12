@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Menu1 extends Model
 {
-    protected $fillable = ["menu1", "slug"];
+    protected $fillable = ['menu1', 'slug'];
     use HasFactory;
 }

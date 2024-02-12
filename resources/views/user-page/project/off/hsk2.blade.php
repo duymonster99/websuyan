@@ -18,11 +18,11 @@
                         </div>
 
                         <div class="pro-h2-off__content--para1">
-                            {!! $item->content1 !!}
+                            {!! $item->appendix !!}
                         </div>
 
                         <div class="pro-h2-off__content--para3">
-                            {!! $item->content2 !!}
+                            {!! $item->content !!}
                         </div>
                     @endforeach
                 @endif

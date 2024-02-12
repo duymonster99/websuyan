@@ -8,7 +8,7 @@
 
         @if (isset($post))
             @foreach ($post as $item)
-                <div class="exam_content">{!! $item->content2 !!}</div>
+                <div class="exam_content">{!! $item->content !!}</div>
             @endforeach
         @endif
     </main>

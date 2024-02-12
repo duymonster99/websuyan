@@ -29,7 +29,7 @@
             @if (isset($post))
                 @foreach ($post as $item)
                     <div class="feel_container--content">
-                        {!! $item->content2 !!}
+                        {!! $item->content !!}
                     </div>
                 @endforeach
             @endif

@@ -3,12 +3,10 @@
 <link rel="stylesheet" href="{{asset('css/project/onl/hskk.css')}}">
 
     <main>
-        @if (isset($post))
-            @foreach ($post as $item)
-                <div class="pro-kk__banner">
-                    <img src="{{asset($item->banner)}}" alt>
-                </div>
-            @endforeach
+        @if (isset($banner))
+            <div class="pro-kk__banner">
+                <img src="{{ asset($banner->banner) }}" alt>
+            </div>
         @endif
 
         <div class="pro-kk__wrapper">
@@ -20,11 +18,11 @@
                         </div>
 
                         <div class="pro-kk__content--para1">
-                            {!! $item->content1 !!}
+                            {!! $item->appendix !!}
                         </div>
 
                         <div class="pro-kk__content--para3">
-                            {!! $item->content2 !!}
+                            {!! $item->content !!}
                         </div>
                     @endforeach
                 @endif

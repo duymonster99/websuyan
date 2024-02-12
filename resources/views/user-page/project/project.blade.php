@@ -5,9 +5,15 @@
         <div id="project__container">
             <div class="project__banner">
                 @if (isset($banner))
-                    <img src="{{ asset($banner->image) }}" alt="">
+                    <img src="{{ asset( $banner->image ) }}" alt="">
                 @endif
             </div>
+
+            @if (isset($post))
+                <div class="project__content--page">
+                    {{ $post->content }}
+                </div>
+            @endif
 
             <div class="wrapper">
                 <div class="project__wrapper">

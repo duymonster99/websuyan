@@ -36,6 +36,7 @@ class SliderController extends Controller
 
         $slider_home = new Slider();
         $slider_home->menu1_id = $request->input('menu');
+        $slider_home->status = "null";
         if ($request->hasFile('image')) {
             $filename = $request->image->getClientOriginalName();
             $destinationPath = public_path('img/slider');
@@ -109,13 +110,20 @@ class SliderController extends Controller
 
         if(isset($post))
         {
-            $post->status = $status_banner;
+            if($status_banner == "null")
+            {
+                $post->status = "Public Page";
+            }
+            else if($status_banner == "Public Page")
+            {
+                $post->status = "null";
+            }
             $post->save();
         }
 
         Toastr::success('Cập nhật thành công');
         return response()->json([
-            'data'=>$data,
+            'data'=>$status_banner,
         ]);
     }
 

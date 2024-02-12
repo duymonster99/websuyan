@@ -18,5 +18,13 @@
                 @endif
             </ul>
         </div>
+
+        @if (isset($post))
+            @foreach ($post as $item)
+                <div class="vocab__content">
+                    {!! $item->content !!}
+                </div>
+            @endforeach
+        @endif
     </main>
 @endsection

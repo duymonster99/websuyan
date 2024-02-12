@@ -21,4 +21,6 @@
             </form>
         </div>
     </div>
+
+    <script src="{{asset('js/confirm-reload.js')}}"></script>
 @endsection

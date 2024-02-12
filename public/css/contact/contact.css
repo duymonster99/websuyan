@@ -19,8 +19,7 @@ a {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: transparent;
-    z-index: 10;
+    z-index: 100;
     gap: 30px;
 }
 
@@ -63,6 +62,12 @@ a {
     padding: 10px;
     flex-direction: column;
     align-items: flex-start;
+    gap: 10px;
+}
+
+.contact-right .contact-frame70 form {
+    display: flex;
+    flex-direction: column;
     gap: 10px;
 }
 

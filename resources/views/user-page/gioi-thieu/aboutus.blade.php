@@ -4,8 +4,8 @@
 
     <main>
         <div class="about__banner">
-            @if (isset($banner))
-                <img src="{{ asset($banner->banner) }}" alt="">
+            @if (isset($post))
+                <img src="{{ asset($post->banner) }}" alt="">
             @endif
         </div>
 
@@ -17,12 +17,14 @@
                             {{ $item->title }}
                         </div>
 
-                        <div class="about__content--para1">
-                            {!! $item->content1 !!}
-                        </div>
+                        @if (isset($item->appendix))
+                            <div class="about__content--para1">
+                                {!! $item->appendix !!}
+                            </div>
+                        @endif
 
                         <div class="about__content--para3">
-                            {!! $item->content2 !!}
+                            {!! $item->content !!}
                         </div>
                     @endforeach
                 @endif

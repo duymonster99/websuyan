@@ -3,14 +3,6 @@
     overflow: hidden;
 }
 
-.home__banner {
-    height: 500px;
-}
-
-.home__banner img {
-    height: 500px;
-}
-
 /* content */
 .home-content {
     display: grid;

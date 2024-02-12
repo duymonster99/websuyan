@@ -2,12 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Menu1;
-use App\Models\Menu2;
-use App\Models\Menu3;
-use App\Models\Menu_child;
-use App\Models\Menu_level_3;
-use App\Models\Menu_parent;
+use App\Models\Category;
 use App\Models\Post;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
@@ -18,29 +13,34 @@ class PostProjectController extends Controller
 {
     public function create()
     {
-        $menu_parent = Menu1::all();
-        $menu_child = Menu2::where("menu1_id", '=', '2')->get();
-        $menu3 = Menu3::all();
-        return view("admin-page.post-manage.project.addPost", compact("menu_parent", "menu_child", "menu3"));
+        $categories = Category::all();
+        return view("admin-page.post-manage.project.addPost", compact("categories"));
     }
 
     public function store(Request $request)
     {
-        // dd($request->all());
         $request->validate([
-            "image"=> "bail|image|mimes:jpeg,png,gif,svg,jpg|max:2048",
+            "image"=> "bail|image|mimes:jpeg,png,gif,svg,jpg|max:100000",
+            "banner"=> "bail|image|mimes:jpeg,png,gif,svg,jpg|max:5120",
+        ],[
+            'image.image' => 'Yêu cầu tải lên tệp hình ảnh',
+            'image.mimes' => 'Tệp hình ảnh chỉ chấp nhận đuôi: jpeg, png, gif, svg, jpg',
+            'image.max' => 'Dung lượng hình ảnh tối đa có thể tải lên là 5MB',
+            'banner.image' => 'Yêu cầu tải lên tệp hình ảnh',
+            'banner.mimes' => 'Tệp hình ảnh chỉ chấp nhận đuôi: jpeg, png, gif, svg, jpg',
+            'banner.max' => 'Dung lượng hình ảnh tối đa có thể tải lên là 5MB',
         ]);
 
         $post = Post::create([
             'stt' => $request->stt,
-            'menu1_id' => $request->menu_parent,
-            'menu2_id' => $request->menu_child,
-            'menu3_id' => $request->menu_3,
+            'menu_id' => $request->menu_id,
             'title' => $request->title,
             'meta_description' => $request->description,
-            'content1' => $request->content1,
-            'content2' => $request->content2,
-            'content3' => $request->content3,
+            'appendix' => $request->appendix,
+            'content' => $request->content,
+            'status_banner' => 'null',
+            'status_home' => 'null',
+            'status_page' => 'null',
         ]);
 
         if ($request->hasFile('image')) {
@@ -52,6 +52,15 @@ class PostProjectController extends Controller
             $post->save();
         }
 
+        if ($request->hasFile('banner')) {
+            $filename = $request->banner->getClientOriginalName();
+            $destinationPath = public_path('img-project');
+            $request->banner->move($destinationPath, $filename);
+            $imagePath = 'img-project/' .$filename;
+            $post->banner = $imagePath;
+            $post->save();
+        }
+
         Toastr::success('Thêm bài viết thành công');
         return redirect()->route("admin.post");
     }
@@ -59,21 +68,26 @@ class PostProjectController extends Controller
     public function edit($id)
     {
         $post = Post::find($id);
-        $menu_level1 = Menu1::all();
-        $menu_child = Menu2::where("menu1_id", '=', '2')->get();
-        $menu_level3 = Menu3::all();
-        return view("admin-page.post-manage.project.editPost", compact("post", "menu_level1", "menu_child", "menu_level3"));
+        $menu = Category::all();
+        return view("admin-page.post-manage.project.editPost", compact("post", "menu"));
     }
 
     public function update(Request $request, $id)
     {
         $request->validate([
-            "image" => "bail|image|mimes:jpeg,png,gif,svg|max:2048",
+            "image" => "bail|image|mimes:jpeg,png,gif,svg|max:5120",
+            "banner"=> "bail|image|mimes:jpeg,png,gif,svg,jpg|max:5120",
+        ],[
+            'image.image' => 'Yêu cầu tải lên tệp hình ảnh',
+            'image.mimes' => 'Tệp hình ảnh chỉ chấp nhận đuôi: jpeg, png, gif, svg, jpg',
+            'image.max' => 'Dung lượng hình ảnh tối đa có thể tải lên là 5MB',
+            'banner.image' => 'Yêu cầu tải lên tệp hình ảnh',
+            'banner.mimes' => 'Tệp hình ảnh chỉ chấp nhận đuôi: jpeg, png, gif, svg, jpg',
+            'banner.max' => 'Dung lượng hình ảnh tối đa có thể tải lên là 5MB',
         ]);
 
         $post = Post::find($id);
-        $post->menu2_id = $request->input('menu_child');
-        $post->menu3_id = $request->input('menu3');
+        $post->menu_id = $request->input('menu');
         $post->title = $request->input('title');
         $post->meta_description = $request->input('description');
         $post->appendix = $request->input('appendix');
@@ -89,6 +103,17 @@ class PostProjectController extends Controller
             $imageName = $request->image->getClientOriginalName();
             $request->image->move(public_path("img-project"), $imageName);
             $post->image = "img-project/" . $imageName;
+            $post->save();
+        }
+
+        if ($request->hasFile("banner")) {
+            $existingImage = public_path($post->banner);
+            if (File::exists($existingImage)) {
+                File::delete($existingImage);
+            }
+            $imageName = $request->banner->getClientOriginalName();
+            $request->banner->move(public_path("img-project"), $imageName);
+            $post->banner = "img-project/" . $imageName;
             $post->save();
         }
 
@@ -126,7 +151,13 @@ class PostProjectController extends Controller
 
         if(isset($post))
         {
-            $post->status_home = $status_home;
+            if($status_home == 'null')
+            {
+                $post->status_home = 'Show Home';
+            }
+            else {
+                $post->status_home = 'null';
+            }
             $post->save();
         }
 
@@ -146,7 +177,13 @@ class PostProjectController extends Controller
 
         if(isset($post))
         {
-            $post->status_page = $status_page;
+            if($status_page == 'null')
+            {
+                $post->status_page = 'Public Page';
+            }
+            else {
+                $post->status_page = 'null';
+            }
             $post->save();
         }
 
@@ -193,6 +230,32 @@ class PostProjectController extends Controller
         Toastr::success('Cập nhật thành công');
         return response()->json([
             'data_proj' => $stt,
+        ]);
+    }
+
+    public function change_status_banner(Request $request)
+    {
+        $data = $request->all();
+        $id = $data['id'];
+        $status_banner = $data['status_banner'];
+
+        $post = Post::find($id);
+
+        if(isset($post))
+        {
+            if($status_banner == 'null')
+            {
+                $post->status_banner = 'Public';
+            }
+            else {
+                $post->status_banner = 'null';
+            }
+            $post->save();
+        }
+
+        Toastr::success('Cập nhật thành công');
+        return response()->json([
+            'data'=>$data,
         ]);
     }
 }

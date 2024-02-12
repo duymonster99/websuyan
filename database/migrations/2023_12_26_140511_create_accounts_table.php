@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('email');
             $table->string('fullname');
             $table->string('password');
-            $table->string('acc_type')->default('user');
+            $table->string('acc_type')->nullable();
             $table->string('reset_token')->nullable();
             $table->string('status')->nullable();
             $table->timestamps();

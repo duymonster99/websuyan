@@ -27,5 +27,13 @@
                 </ul>
             </div>
         </div>
+
+        @if (isset($post))
+            @foreach ($post as $item)
+                <div class="teacher__content">
+                    {!! $item->content !!}
+                </div>
+            @endforeach
+        @endif
     </main>
 @endsection

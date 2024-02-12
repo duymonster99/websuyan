@@ -1,407 +1,102 @@
 @extends('admin-page.index')
 @section('admin')
-    <div class="row">
-        <div class="card bg-light text-dark" style="width: 100%; height: auto; overflow: hidden">
-            <div class="card-title d-flex justify-content-between align-items-center px-3"
-                style="background: #c9e6c0; height: 50px; color: black">
-                <h3 class="m-0 text-center font-weight-bold">Bài viết danh mục Giới thiệu</h3>
-                <a href="{{ route('admin.create.home') }}" class="btn btn-primary">Thêm bài viết</a>
-            </div>
+    @if (isset($categories))
+        @foreach ($categories as $item_cates)
+            <div class="row pb-5">
+                <div class="card bg-light text-dark" style="width: 100%; height: auto; overflow: hidden">
+                    <div class="card-title d-flex justify-content-between align-items-center px-3"
+                        style="background: #c9e6c0; height: 50px; color: black">
+                        <h3 class="m-0 text-center font-weight-bold">Bài viết danh mục {{ $item_cates->name }}</h3>
+                    </div>
 
-            <div class="card-body d-block">
-                <table class="display text-dark example" style="width:100%">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th>STT</th>
-                            <th>Banner</th>
-                            <th>Status Banner</th>
-                            <th>Menu Level 2</th>
-                            <th style="max-width: 150px">Title</th>
-                            <th>Image</th>
-                            <th style="max-width: 50px">Status Home</th>
-                            <th style="max-width: 50px">Status Page</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if (isset($post))
-                            @foreach ($post as $item)
-                                <tr>
-                                    <td>
-                                        <input type="submit" value="-" data-id="{{ $item->id }}"
-                                            data-url="{{ route('post.decrease.proc') }}" class="decrease"
-                                            style="background: transparent; border: none">
-                                        <span class="stt-proc" data-item-id="{{ $item->id }}">{{ $item->stt }}</span>
-                                        <input type="submit" value="+" data-id="{{ $item->id }}"
-                                            data-url="{{ route('post.increase.proc') }}" class="increase"
-                                            style="background: transparent; border: none">
-                                    </td>
-                                    <td>{{ $item->banner }}</td>
-                                    <td style="width: 150px">
-                                        <select class="form-select status_banner bg-light" data-id="{{ $item->id }}"
-                                            data-url="{{ route('post.proc.home') }}">
-                                            <option value="{{ $item->status_home }}">{{ $item->status_home }}</option>
-                                            <option value="None">None</option>
-                                            <option value="Show Home">Show Home</option>
-                                        </select>
-                                    </td>
-                                    <td>{{ $item->menu2 }}</td>
-                                    <td class="text-truncate" style="max-width: 150px">{{ $item->title }}</td>
-                                    <td>
-                                        <img src="{{ asset($item->image) }}" alt="" style="width: 100px">
-                                    </td>
-                                    <td style="width: 150px">
-                                        <select class="form-select status_home bg-light" data-id="{{ $item->id }}"
-                                            data-url="{{ route('post.proc.home') }}">
-                                            <option value="{{ $item->status_home }}">{{ $item->status_home }}</option>
-                                            <option value="None">None</option>
-                                            <option value="Show Home">Show Home</option>
-                                        </select>
-                                    </td>
-                                    <td style="width: 150px">
-                                        <select class="form-select status_page bg-light" data-id="{{ $item->id }}"
-                                            data-url="{{ route('post.proc.page') }}">
-                                            <option value="{{ $item->status_page }}">{{ $item->status_page }}</option>
-                                            <option value="None">None</option>
-                                            <option value="Public Page">Public Page</option>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <a href="{{ route('admin.edit.home', $item->id) }}"
-                                            class="btn btn-success btn-sm rounded-0" type="button" data-toggle="tooltip"
-                                            data-placement="top" title="Edit">
-                                            <i class="fa fa-edit"></i>
-                                        </a>
-                                        <a href="{{ route('admin.delete.home', $item->id) }}"
-                                            class="btn btn-danger btn-sm rounded-0" type="button" data-toggle="tooltip"
-                                            data-placement="top" title="Delete"
-                                            onclick="return confirm('Bạn có chắc chắn muốn xóa bài viết này?')">
-                                            <i class="fa fa-trash"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                            @endforeach
+                    <div class="card-body d-block">
+                        @if (isset($post_inf))
+                            <table class="display text-dark example" style="width:100%">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>Banner</th>
+                                        <th>Status Banner</th>
+                                        <th>Menu Level 2</th>
+                                        <th>Menu Level 3</th>
+                                        <th style="max-width: 150px">Title</th>
+                                        <th>Image</th>
+                                        <th style="max-width: 50px">Status Home</th>
+                                        <th style="max-width: 50px">Status Page</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($post_inf as $key => $item)
+                                        @foreach ($item as $itemPost)
+                                            @if ($itemPost->menu1 == $item_cates->name)
+                                                <tr>
+                                                    <td>
+                                                        <input type="submit" value="-" data-id="{{ $itemPost->id }}"
+                                                            data-url="{{ route('decrease.stt.post') }}" class="decrease"
+                                                            style="background: transparent; border: none">
+                                                        <span class="stt"
+                                                            data-item-id="{{ $itemPost->id }}">{{ $itemPost->stt }}</span>
+                                                        <input type="submit" value="+" data-id="{{ $itemPost->id }}"
+                                                            data-url="{{ route('increase.stt.post') }}" class="increase"
+                                                            style="background: transparent; border: none">
+                                                    </td>
+                                                    <td>
+                                                        <img src="{{ asset($itemPost->banner) }}" alt=""
+                                                            width="100px" class="img-thumbnail">
+                                                    </td>
+                                                    <td style="width: 100px">
+                                                        <input type="checkbox" name="" class="status_banner"
+                                                            data-id="{{ $itemPost->id }}"
+                                                            data-url="{{ route('show.banner.page') }}"
+                                                            value="{{ $itemPost->status_banner }}"
+                                                            @if ($itemPost->status_banner == 'Public') checked @endif> Public
+                                                    </td>
+                                                    <td>{{ $itemPost->menu2 }}</td>
+                                                    <td>{{ $itemPost->menu3 }}</td>
+                                                    <td class="text-truncate" style="max-width: 150px">
+                                                        {{ $itemPost->title }}</td>
+                                                    <td>
+                                                        <img src="{{ asset($itemPost->image) }}" alt=""
+                                                            style="width: 100px" class="img-thumbnail">
+                                                    </td>
+                                                    <td style="width: 150px">
+                                                        <input type="checkbox" name="" class="status_home"
+                                                            data-id="{{ $itemPost->id }}"
+                                                            data-url="{{ route('show.post.home') }}"
+                                                            value="{{ $itemPost->status_home }}"
+                                                            @if ($itemPost->status_home == 'Show Home') checked @endif> Show Home
+                                                    </td>
+                                                    <td style="width: 150px">
+                                                        <input type="checkbox" name="" class="status_page"
+                                                            data-id="{{ $itemPost->id }}"
+                                                            data-url="{{ route('show.post.page') }}"
+                                                            value="{{ $itemPost->status_page }}"
+                                                            @if ($itemPost->status_page == 'Public Page') checked @endif> Public Page
+                                                    </td>
+                                                    <td>
+                                                        <a href="{{ route('admin.edit.post', $itemPost->id) }}"
+                                                            class="btn btn-success btn-sm rounded-0" type="button"
+                                                            data-toggle="tooltip" data-placement="top" title="Edit">
+                                                            <i class="fa fa-edit"></i>
+                                                        </a>
+                                                        <a href="{{ route('admin.delete.post', $itemPost->id) }}"
+                                                            class="btn btn-danger btn-sm rounded-0" type="button"
+                                                            data-toggle="tooltip" data-placement="top" title="Delete"
+                                                            onclick="return confirm('Bạn có chắc chắn muốn xóa bài viết này?')">
+                                                            <i class="fa fa-trash"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            @endif
+                                        @endforeach
+                                    @endforeach
+                                </tbody>
+                            </table>
                         @endif
-                    </tbody>
-                </table>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-
-    <div class="row pt-5">
-        <div class="card bg-light text-dark" style="width: 100%; height: auto; overflow: hidden">
-            <div class="card-title d-flex justify-content-between align-items-center px-3"
-                style="background: #c9e6c0; height: 50px; color: black">
-                <h3 class="m-0 text-center font-weight-bold">Bài viết danh mục Khóa học</h3>
-                <a href="{{ route('create.proj') }}" class="btn btn-primary">Thêm bài viết</a>
-            </div>
-
-            <div class="card-body d-block">
-                <table class="display text-dark example" style="width:100%">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th>STT</th>
-                            <th>Menu Level 2</th>
-                            <th>Menu Level 3</th>
-                            <th style="max-width: 150px">Title</th>
-                            <th>Image</th>
-                            <th style="max-width: 50px">Status Home</th>
-                            <th style="max-width: 50px">Status Page</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if (isset($post_project))
-                            @foreach ($post_project as $item)
-                                <tr>
-                                    <td>
-                                        <input type="submit" value="-" data-id="{{ $item->id }}"
-                                            data-url="{{ route('post.decrease.proj') }}" class="decrease"
-                                            style="background: transparent; border: none">
-                                        <span class="stt-proj" data-item-id="{{ $item->id }}">{{ $item->stt }}</span>
-                                        <input type="submit" value="+" data-id="{{ $item->id }}"
-                                            data-url="{{ route('post.increase.proj') }}" class="increase"
-                                            style="background: transparent; border: none">
-                                    </td>
-                                    <td>{{ $item->menu2 }}</td>
-                                    <td>{{ $item->menu3 }}</td>
-                                    <td class="text-truncate" style="max-width: 150px">{{ $item->title }}</td>
-                                    <td>
-                                        <img src="{{ asset($item->image) }}" alt="" style="width: 100px">
-                                    </td>
-                                    <td style="width: 150px">
-                                        <select class="form-select status_home bg-light" data-id="{{ $item->id }}"
-                                            data-url="{{ route('status.proj.home') }}">
-                                            <option value="{{ $item->status_home }}">{{ $item->status_home }}</option>
-                                            <option value="None">None</option>
-                                            <option value="Show Home">Show Home</option>
-                                        </select>
-                                    </td>
-                                    <td style="width: 150px">
-                                        <select class="form-select status_page bg-light" data-id="{{ $item->id }}"
-                                            data-url="{{ route('status.proj.page') }}">
-                                            <option value="{{ $item->status_page }}">{{ $item->status_page }}</option>
-                                            <option value="None">None</option>
-                                            <option value="Public Page">Public Page</option>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <a href="{{ route('edit.proj', $item->id) }}"
-                                            class="btn btn-success btn-sm rounded-0" type="button" data-toggle="tooltip"
-                                            data-placement="top" title="Edit">
-                                            <i class="fa fa-edit"></i>
-                                        </a>
-                                        <a href="{{ route('delete.proj', $item->id) }}"
-                                            class="btn btn-danger btn-sm rounded-0" type="button" data-toggle="tooltip"
-                                            data-placement="top" title="Delete"
-                                            onclick="return confirm('Bạn có chắc chắn muốn xóa bài viết này?')">
-                                            <i class="fa fa-trash"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        @endif
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-
-    <div class="row pt-5">
-        <div class="card bg-light text-dark" style="width: 100%; height: auto; overflow: hidden">
-            <div class="card-title d-flex justify-content-between align-items-center px-3"
-                style="background: #c9e6c0; height: 50px; color: black">
-                <h3 class="m-0 text-center font-weight-bold">Bài viết danh mục Khai giảng</h3>
-                <a href="{{ route('create.sche') }}" class="btn btn-primary">Thêm bài viết</a>
-            </div>
-
-            <div class="card-body d-block">
-                <table class="display text-dark example" style="width:100%">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th>STT</th>
-                            <th>Banner</th>
-                            <th>Status Banner</th>
-                            <th style="max-width: 150px">Title</th>
-                            <th>Image</th>
-                            <th style="max-width: 150px">Status Home</th>
-                            <th style="max-width: 150px">Status Page</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if (isset($post_schedule))
-                            @foreach ($post_schedule as $item)
-                                <tr>
-                                    <td>
-                                        <input type="submit" value="-" data-id="{{ $item->id }}"
-                                            data-url="{{ route('post.decrease.sche') }}" class="decrease"
-                                            style="background: transparent; border: none">
-                                        <span class="stt-sche" data-item-id="{{ $item->id }}">{{ $item->stt }}</span>
-                                        <input type="submit" value="+" data-id="{{ $item->id }}"
-                                            data-url="{{ route('post.increase.sche') }}" class="increase"
-                                            style="background: transparent; border: none">
-                                    </td>
-                                    <td><img src="{{ asset($item->image) }}" alt="" style="width: 100px"></td>
-                                    <td style="width: 150px">
-                                        <select class="form-select status_banner bg-light" data-id="{{ $item->id }}"
-                                            data-url="{{ route('status.sche.banner') }}">
-                                            <option value="{{ $item->status_banner }}">{{ $item->status_banner }}</option>
-                                            <option value="none">None</option>
-                                            <option value="show">Show</option>
-                                        </select>
-                                    </td>
-                                    <td class="text-truncate" style="max-width: 150px">{{ $item->title }}</td>
-                                    <td>
-                                        <img src="{{ asset($item->image) }}" alt="" style="width: 100px">
-                                    </td>
-                                    <td style="width: 150px">
-                                        <select class="form-select status_home bg-light" data-id="{{ $item->id }}"
-                                            data-url="{{ route('status.sche.home') }}">
-                                            <option value="{{ $item->status_home }}">{{ $item->status_home }}</option>
-                                            <option value="None">None</option>
-                                            <option value="Show Home">Show Home</option>
-                                        </select>
-                                    </td>
-                                    <td style="width: 150px">
-                                        <select class="form-select status_page bg-light" data-id="{{ $item->id }}"
-                                            data-url="{{ route('status.sche.page') }}">
-                                            <option value="{{ $item->status_page }}">{{ $item->status_page }}</option>
-                                            <option value="None">None</option>
-                                            <option value="Public Page">Public Page</option>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <a href="{{ route('edit.sche', $item->id) }}"
-                                            class="btn btn-success btn-sm rounded-0" type="button" data-toggle="tooltip"
-                                            data-placement="top" title="Edit">
-                                            <i class="fa fa-edit"></i>
-                                        </a>
-                                        <a href="{{ route('delete.sche', $item->id) }}"
-                                            class="btn btn-danger btn-sm rounded-0" type="button" data-toggle="tooltip"
-                                            data-placement="top" title="Delete"
-                                            onclick="return confirm('Bạn có chắc chắn muốn xóa bài viết này?')">
-                                            <i class="fa fa-trash"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        @endif
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-
-    <div class="row pt-5">
-        <div class="card bg-light text-dark" style="width: 100%; height: auto; overflow: hidden">
-            <div class="card-title d-flex justify-content-between align-items-center px-3"
-                style="background: #c9e6c0; height: 50px; color: black">
-                <h3 class="m-0 text-center font-weight-bold">Bài viết danh mục Thư viện</h3>
-                <a href="{{ route('create.lib') }}" class="btn btn-primary">Thêm bài viết</a>
-            </div>
-
-            <div class="card-body d-block">
-                <table class="display text-dark example" style="width:100%">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th>STT</th>
-                            <th>Menu Level 2</th>
-                            <th style="max-width: 150px">Title</th>
-                            <th>Image</th>
-                            <th style="max-width: 150px">Status Home</th>
-                            <th style="max-width: 150px">Status Page</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if (isset($post_lib))
-                            @foreach ($post_lib as $item)
-                                <tr>
-                                    <td>
-                                        <input type="submit" value="-" data-id="{{ $item->id }}"
-                                            data-url="{{ route('post.decrease.lib') }}" class="decrease"
-                                            style="background: transparent; border: none">
-                                        <span class="stt-lib" data-item-id="{{ $item->id }}">{{ $item->stt }}</span>
-                                        <input type="submit" value="+" data-id="{{ $item->id }}"
-                                            data-url="{{ route('post.increase.lib') }}" class="increase"
-                                            style="background: transparent; border: none">
-                                    </td>
-                                    <td style="max-width: 150px">{{ $item->menu2 }}</td>
-                                    <td class="text-truncate" style="max-width: 150px">{{ $item->title }}</td>
-                                    <td>
-                                        <img src="{{ asset($item->image) }}" alt="" style="width: 100px">
-                                    </td>
-                                    <td style="width: 150px">
-                                        <select class="form-select status_home bg-light" data-id="{{ $item->id }}"
-                                            data-url="{{ route('status.lib.home') }}">
-                                            <option value="{{ $item->status_home }}">{{ $item->status_home }}</option>
-                                            <option value="None">None</option>
-                                            <option value="Show Home">Show Home</option>
-                                        </select>
-                                    </td>
-                                    <td style="width: 150px">
-                                        <select class="form-select status_page bg-light" data-id="{{ $item->id }}"
-                                            data-url="{{ route('status.lib.page') }}">
-                                            <option value="{{ $item->status_page }}">{{ $item->status_page }}</option>
-                                            <option value="None">None</option>
-                                            <option value="Public Page">Public Page</option>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <a href="{{ route('edit.lib', $item->id) }}"
-                                            class="btn btn-success btn-sm rounded-0" type="button" data-toggle="tooltip"
-                                            data-placement="top" title="Edit">
-                                            <i class="fa fa-edit"></i>
-                                        </a>
-                                        <a href="{{ route('delete.lib', $item->id) }}"
-                                            class="btn btn-danger btn-sm rounded-0" type="button" data-toggle="tooltip"
-                                            data-placement="top" title="Delete"
-                                            onclick="return confirm('Bạn có chắc chắn muốn xóa bài viết này?')">
-                                            <i class="fa fa-trash"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        @endif
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-
-    <div class="row pt-5">
-        <div class="card bg-light text-dark" style="width: 100%; height: auto; overflow: hidden">
-            <div class="card-title d-flex justify-content-between align-items-center px-3"
-                style="background: #c9e6c0; height: 50px; color: black">
-                <h3 class="m-0 text-center font-weight-bold">Bài viết danh mục Tuyển dụng</h3>
-                <a href="{{ route('create.emp') }}" class="btn btn-primary">Thêm bài viết</a>
-            </div>
-
-            <div class="card-body d-block">
-                <table class="display text-dark example" style="width:100%">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th>STT</th>
-                            <th style="max-width: 150px">Title</th>
-                            <th>Image</th>
-                            <th style="max-width: 150px">Status Home</th>
-                            <th style="max-width: 150px">Status Page</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if (isset($post_emp))
-                            @foreach ($post_emp as $item)
-                                <tr>
-                                    <td>
-                                        <input type="submit" value="-" data-id="{{ $item->id }}"
-                                            data-url="{{ route('post.decrease.emp') }}" class="decrease"
-                                            style="background: transparent; border: none">
-                                        <span class="stt-emp" data-item-id="{{ $item->id }}">{{ $item->stt }}</span>
-                                        <input type="submit" value="+" data-id="{{ $item->id }}"
-                                            data-url="{{ route('post.increase.emp') }}" class="increase"
-                                            style="background: transparent; border: none">
-                                    </td>
-                                    <td class="text-truncate" style="max-width: 150px">{{ $item->title }}</td>
-                                    <td>
-                                        <img src="{{ asset($item->image) }}" alt="" style="width: 100px">
-                                    </td>
-                                    <td style="width: 150px">
-                                        <select class="form-select status_home bg-light" data-id="{{ $item->id }}"
-                                            data-url="{{ route('status.emp.home') }}">
-                                            <option value="{{ $item->status_home }}">{{ $item->status_home }}</option>
-                                            <option value="None">None</option>
-                                            <option value="Show Home">Show Home</option>
-                                        </select>
-                                    </td>
-                                    <td style="width: 150px">
-                                        <select class="form-select status_page bg-light" data-id="{{ $item->id }}"
-                                            data-url="{{ route('status.emp.page') }}">
-                                            <option value="{{ $item->status_page }}">{{ $item->status_page }}</option>
-                                            <option value="None">None</option>
-                                            <option value="Public Page">Public Page</option>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <a href="{{ route('edit.emp', $item->id) }}"
-                                            class="btn btn-success btn-sm rounded-0" type="button" data-toggle="tooltip"
-                                            data-placement="top" title="Edit">
-                                            <i class="fa fa-edit"></i>
-                                        </a>
-                                        <a href="{{ route('delete.emp', $item->id) }}"
-                                            class="btn btn-danger btn-sm rounded-0" type="button" data-toggle="tooltip"
-                                            data-placement="top" title="Delete"
-                                            onclick="return confirm('Bạn có chắc chắn muốn xóa bài viết này?')">
-                                            <i class="fa fa-trash"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        @endif
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
+        @endforeach
+    @endif
 @endsection

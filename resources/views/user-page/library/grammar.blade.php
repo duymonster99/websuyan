@@ -18,11 +18,11 @@
                         </div>
 
                         <div class="grammar__content--para1">
-                            {!! $item->content1 !!}
+                            {!! $item->appendix !!}
                         </div>
 
                         <div class="grammar__content--para3">
-                            {!! $item->content2 !!}
+                            {!! $item->content !!}
                         </div>
                     @endforeach
                 @endif

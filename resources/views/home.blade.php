@@ -10,17 +10,12 @@
                 <div class="carousel-indicators">
                     @if (isset($banner))
                         @foreach ($banner as $index => $item)
-                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{$index}}"
-                                class="{{ $index === 0 ? 'active' : '' }}"
-                                aria-current="{{ $index === 0 ? 'true' : '' }}" aria-label="Slide {{$index++}}"></button>
+                            <button type="button" data-bs-target="#carouselExampleIndicators"
+                                data-bs-slide-to="{{ $index }}" class="{{ $index === 0 ? 'active' : '' }}"
+                                aria-current="{{ $index === 0 ? 'true' : '' }}"
+                                aria-label="Slide {{ $index++ }}"></button>
                         @endforeach
                     @endif
-                    {{-- <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
-                        aria-current="true" aria-label="Slide 1"></button>
-                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
-                        aria-label="Slide 2"></button>
-                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
-                        aria-label="Slide 3"></button> --}}
                 </div>
                 <div class="carousel-inner">
                     @if (isset($banner))
@@ -68,7 +63,7 @@
         </div>
 
         <!-- curriculum -->
-        <div data-aos="zoom-in-up" data-aos-duration="900" class="curriculum">
+        {{-- <div data-aos="zoom-in-up" data-aos-duration="900" class="curriculum">
             <span>
                 MUA GIÁO TRÌNH TIẾNG TRUNG ONLINE
             </span>
@@ -76,22 +71,26 @@
             <div class="btn_here">
                 <button>TẠI ĐÂY</button>
             </div>
-        </div>
+        </div> --}}
 
         <!-- Slider project -->
-        <div class="home__project-slider">
-            <div data-aos="fade-down" data-aos-easing="linear" data-aos-duration="900" class="home-project_title">
-                <div class="home-project_border--left"></div>
-                <span>CÁC KHÓA HỌC Ở SUYAN</span>
-                <div class="home-project_border--right"></div>
-            </div>
+        @if (isset($post_project))
+            <div class="home__project-slider">
+                <div data-aos="fade-down" data-aos-easing="linear" data-aos-duration="900" class="home-project_title">
+                    <div class="home-project_border--left"></div>
+                    <span>CÁC KHÓA HỌC Ở SUYAN</span>
+                    <div class="home-project_border--right"></div>
+                </div>
 
-            <div class="home-project__wrapper">
-                <ul class="home-project__carousel">
-                    @if (isset($post_project))
+                <div class="home-project__wrapper">
+                    <ul class="home-project__carousel">
                         @foreach ($post_project as $item)
                             <li class="home-project__card" data-aos="fade-up" data-aos-anchor-placement="top-bottom"
                                 data-aos-duration="900">
+                                <div class="home-project__slider--image">
+                                    <img src="{{ asset($item->image) }}" alt="">
+                                </div>
+
                                 <div class="home-project__slider--title">
                                     <h4>
                                         <strong>
@@ -99,67 +98,65 @@
                                         </strong>
                                     </h4>
                                 </div>
-                                <div class="home-project__slider--image">
-                                    <img src="{{ asset($item->image) }}" alt="">
-                                </div>
 
                                 <div class="home-project__slider--infor">
                                     {!! $item->meta_description !!}
                                 </div>
                             </li>
                         @endforeach
-                    @endif
-                </ul>
+                    </ul>
+                </div>
             </div>
-        </div>
+        @endif
         <!-- end slider -->
 
         <!-- slider cảm nhận học viên -->
-        <div class="feel-home__container">
-            <!-- TITLE -->
-            <div data-aos="fade-zoom-in" data-aos-easing="ease-in-back" data-aos-delay="300" data-aos-duration="900"
-                data-aos-offset="0" class="feel-home__container--title">
-                <span></span>
-                <span>CẢM NHẬN CỦA HỌC VIÊN</span>
-                <span></span>
-            </div>
-            <!-- slider feedback -->
-            <div class="feel-home__container--slider">
-                <!-- Slider main container -->
-                <div data-aos="flip-up" data-aos-duration="900" class="swiper">
-                    <!-- Additional required wrapper -->
-                    <div class="swiper-wrapper">
-                        <!-- Slides -->
-                        @if (isset($post_rv))
+        @if (isset($post_rv))
+            <div class="feel-home__container">
+                <!-- TITLE -->
+                <div data-aos="fade-zoom-in" data-aos-easing="ease-in-back" data-aos-delay="300" data-aos-duration="900"
+                    data-aos-offset="0" class="feel-home__container--title">
+                    <span></span>
+                    <span>CẢM NHẬN CỦA HỌC VIÊN</span>
+                    <span></span>
+                </div>
+                <!-- slider feedback -->
+                <div class="feel-home__container--slider">
+                    <!-- Slider main container -->
+                    <div data-aos="flip-up" data-aos-duration="900" class="swiper">
+                        <!-- Additional required wrapper -->
+                        <div class="swiper-wrapper">
+                            <!-- Slides -->
                             @foreach ($post_rv as $item)
                                 <div class="swiper-slide">
                                     <img src="{{ asset($item->image) }}" alt="">
                                 </div>
                             @endforeach
-                        @endif
-                    </div>
-                    <!-- If we need pagination -->
-                    <div class="swiper-pagination"></div>
+                        </div>
+                        <!-- If we need pagination -->
+                        <div class="swiper-pagination"></div>
 
-                    <!-- If we need navigation buttons -->
-                    <div class="swiper-button-prev"></div>
-                    <div class="swiper-button-next"></div>
+                        <!-- If we need navigation buttons -->
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next"></div>
+                    </div>
                 </div>
             </div>
-        </div>
+        @endif
 
         <!-- Profile teacher -->
-        <div class="home-profile-teacher">
-            <div data-aos="zoom-in-down" data-aos-duration="900" class="home-profile-teacher__title">
-                <span></span>
-                <span class="title">GIẢNG VIÊN Ở SUYAN</span>
-                <span></span>
-            </div>
+        @if (isset($post_teacher))
+            <div class="home-profile-teacher">
+                <div data-aos="zoom-in-down" data-aos-duration="900" class="home-profile-teacher__title">
+                    <span></span>
+                    <span class="title">GIẢNG VIÊN Ở SUYAN</span>
+                    <span></span>
+                </div>
 
-            <div data-aos="zoom-out" data-aos-duration="900" class="home-profile-teacher__wrapper">
-                <i id="left" class="bi bi-arrow-left"></i>
-                <ul class="home-profile-teacher__carousel">
-                    @if (isset($post_teacher))
+                <div data-aos="zoom-out" data-aos-duration="900" class="home-profile-teacher__wrapper">
+                    <i id="left" class="bi bi-arrow-left"></i>
+                    <ul class="home-profile-teacher__carousel">
+
                         @foreach ($post_teacher as $item)
                             <li class="home-profile-teacher__card">
                                 <div class="home-profile-teacher__name">
@@ -170,12 +167,11 @@
                                 </div>
                             </li>
                         @endforeach
-                    @endif
-
-                </ul>
-                <i id="right" class="bi bi-arrow-right"></i>
+                    </ul>
+                    <i id="right" class="bi bi-arrow-right"></i>
+                </div>
             </div>
-        </div>
+        @endif
 
         <!-- register form -->
         <div class="registerForm container-fluid d-flex justify-content-evenly align-items-center flex-wrap mb-5"
@@ -238,17 +234,17 @@
 
         <!-- media -->
         <!-- <div data-aos="flip-down" data-aos-duration="900" class="media_wrapper">
-                                                    <div class="media__title">
-                                                        <span></span>
-                                                        <span class="title">TRUYỀN THÔNG</span>
-                                                        <span></span>
-                                                    </div>
+                                                                <div class="media__title">
+                                                                    <span></span>
+                                                                    <span class="title">TRUYỀN THÔNG</span>
+                                                                    <span></span>
+                                                                </div>
 
-                                                    <div class="media__content">
-                                                        <img src="image/Procedure/truyen_thong.jpg" alt="">
-                                                        <img src="image/Procedure/truyen_thong.jpg" alt="">
-                                                        <img src="image/Procedure/truyen_thong.jpg" alt="">
-                                                    </div>
-                                                </div> -->
+                                                                <div class="media__content">
+                                                                    <img src="image/Procedure/truyen_thong.jpg" alt="">
+                                                                    <img src="image/Procedure/truyen_thong.jpg" alt="">
+                                                                    <img src="image/Procedure/truyen_thong.jpg" alt="">
+                                                                </div>
+                                                            </div> -->
     </main>
 @endsection

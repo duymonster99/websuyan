@@ -9,12 +9,11 @@
         </div>
 
         <div class="container-fluid">
-
             @if (isset($post))
                 @foreach ($post as $item)
                     <div class="content">
                         <img src="{{ asset($item->image) }}" alt="">
-                        {!! $item->content2 !!}
+                        {!! $item->content !!}
                     </div>
                 @endforeach
             @endif

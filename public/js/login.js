@@ -36,3 +36,9 @@
     function closePopup() {
         popup.classList.remove("open-popup");
     }
+
+$(document).ready(function(){
+    $('#search').click(function(){
+        $('.search-box').toggleClass('active');
+    });
+});

@@ -41,7 +41,7 @@ $(document).ready(function () {
 })
 
 $(document).ready(function () {
-    $(".status_slider").change(function(){
+    $(".status_banner").change(function(){
         let status = $(this).val();
         let id = $(this).data('id');
         let url = $(this).data('url');

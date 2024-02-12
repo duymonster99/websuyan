@@ -22,8 +22,15 @@ class ScheduleOpenningController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            "image"=> "bail|image|mimes:jpeg,png,gif,svg,jpg|max:100000",
-            "image_banner"=> "bail|image|mimes:jpeg,png,gif,svg,jpg|max:100000",
+            "image"=> "bail|image|mimes:jpeg,png,gif,svg,jpg|max:5120",
+            "banner"=> "bail|image|mimes:jpeg,png,gif,svg,jpg|max:5120",
+        ],[
+            'image.image' => 'Yêu cầu tải lên tệp hình ảnh',
+            'image.mimes' => 'Tệp hình ảnh chỉ chấp nhận đuôi: jpeg, png, gif, svg, jpg',
+            'image.max' => 'Dung lượng hình ảnh tối đa có thể tải lên là 5MB',
+            'banner.image' => 'Yêu cầu tải lên tệp hình ảnh',
+            'banner.mimes' => 'Tệp hình ảnh chỉ chấp nhận đuôi: jpeg, png, gif, svg, jpg',
+            'banner.max' => 'Dung lượng hình ảnh tối đa có thể tải lên là 5MB',
         ]);
 
         $post = Post::create([
@@ -33,6 +40,9 @@ class ScheduleOpenningController extends Controller
             'meta_description' => $request->description,
             'appendix' => $request->appendix,
             'content' => $request->content,
+            'status_banner' => 'null',
+            'status_home' => 'null',
+            'status_page' => 'null',
         ]);
 
         if ($request->hasFile('image')) {
@@ -44,10 +54,10 @@ class ScheduleOpenningController extends Controller
             $post->save();
         }
 
-        if ($request->hasFile('image_banner')) {
-            $filename = $request->image_banner->getClientOriginalName();
+        if ($request->hasFile('banner')) {
+            $filename = $request->banner->getClientOriginalName();
             $destinationPath = public_path('img-schedule');
-            $request->image_banner->move($destinationPath, $filename);
+            $request->banner->move($destinationPath, $filename);
             $imagePath = 'img-schedule/' .$filename;
             $post->banner = $imagePath;
             $post->save();
@@ -67,8 +77,15 @@ class ScheduleOpenningController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            "image" => "bail|image|mimes:jpeg,png,gif,svg|max:100000",
-            "image_banner" => "bail|image|mimes:jpeg,png,gif,svg|max:100000",
+            "image"=> "bail|image|mimes:jpeg,png,gif,svg,jpg|max:5120",
+            "banner"=> "bail|image|mimes:jpeg,png,gif,svg,jpg|max:5120",
+        ],[
+            'image.image' => 'Yêu cầu tải lên tệp hình ảnh',
+            'image.mimes' => 'Tệp hình ảnh chỉ chấp nhận đuôi: jpeg, png, gif, svg, jpg',
+            'image.max' => 'Dung lượng hình ảnh tối đa có thể tải lên là 5MB',
+            'banner.image' => 'Yêu cầu tải lên tệp hình ảnh',
+            'banner.mimes' => 'Tệp hình ảnh chỉ chấp nhận đuôi: jpeg, png, gif, svg, jpg',
+            'banner.max' => 'Dung lượng hình ảnh tối đa có thể tải lên là 5MB',
         ]);
 
         $post = Post::find($id);
@@ -90,13 +107,13 @@ class ScheduleOpenningController extends Controller
             $post->save();
         }
         // xu ly banner
-        if ($request->hasFile("image_banner")) {
+        if ($request->hasFile("banner")) {
             $existingImage = public_path($post->banner);
             if (File::exists($existingImage)) {
                 File::delete($existingImage);
             }
-            $imageName = $request->image_banner->getClientOriginalName();
-            $request->image_banner->move(public_path("img-schedule"), $imageName);
+            $imageName = $request->banner->getClientOriginalName();
+            $request->banner->move(public_path("img-schedule"), $imageName);
             $post->banner = "img-schedule/" . $imageName;
             $post->save();
         }
@@ -110,10 +127,14 @@ class ScheduleOpenningController extends Controller
         $post = Post::find($id);
         if ($post != null) {
             $imagePath = public_path($post->image);
+            $bannerPath = public_path($post->banner);
             $check = $post->delete();
             if ($check) {
                 if (File::exists($imagePath)) {
                     File::delete($imagePath);
+                }
+                if (File::exists($bannerPath)) {
+                    File::delete($bannerPath);
                 }
                 Toastr::success('Xóa bài viết thành công');
                 return redirect()->back();
@@ -135,7 +156,13 @@ class ScheduleOpenningController extends Controller
 
         if(isset($post))
         {
-            $post->status_home = $status_home;
+            if($status_home == 'null')
+            {
+                $post->status_home = 'Show Home';
+            }
+            else {
+                $post->status_home = 'null';
+            }
             $post->save();
         }
 
@@ -155,7 +182,13 @@ class ScheduleOpenningController extends Controller
 
         if(isset($post))
         {
-            $post->status_page = $status_page;
+            if($status_page == 'null')
+            {
+                $post->status_page = 'Public Page';
+            }
+            else {
+                $post->status_page = 'null';
+            }
             $post->save();
         }
 
@@ -175,7 +208,13 @@ class ScheduleOpenningController extends Controller
 
         if(isset($post))
         {
-            $post->status_banner = $status_banner;
+            if($status_banner == 'null')
+            {
+                $post->status_banner = 'Public';
+            }
+            else {
+                $post->status_banner = 'null';
+            }
             $post->save();
         }
 

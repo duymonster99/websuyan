@@ -58,17 +58,21 @@ todo    nav-bar
 /* ?==================================nav-menu */
 .nav-toolbar {
     display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
-.list-item {
+ul.list-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: relative;
-    padding: 10px 20px;
     border-radius: 20px;
     font-size: 16px;
     cursor: pointer;
     z-index: 1000;
+}
+
+ul.list-item>li {
+    padding: 10px 20px;
 }
 
 .list-item i {
@@ -80,35 +84,16 @@ todo    nav-bar
     display: none;
 }
 
-/*! Procedure */
-.list-item__expand-procedure a {
-    padding: 10px;
-
-
+.list-item__child {
+    position: relative;
 }
 
-.list-item__expand-procedure a:hover {
-    background-color: #C9E6C0;
-
-}
-
-.list-item__expand-procedure a:first-child:hover {
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-
-}
-
-.list-item__expand-procedure a:last-child:hover {
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-}
-
-.list-item__expand-procedure {
+.list-item__child ul {
     background-color: #fff;
     position: absolute;
     width: 250px;
     top: 50px;
-    left: 10px;
+    /* left: 10px; */
     display: flex;
     flex-direction: column;
     border-radius: 8px;
@@ -120,85 +105,54 @@ todo    nav-bar
     z-index: 1000;
 }
 
-.list-item:hover .list-item__expand-procedure {
+.list-item__child ul li{
+    padding: 10px;
+}
+
+.list-item__child ul li:hover{
+    background-color: #C9E6C0;
+}
+
+.list-item__child ul li:first-child:hover {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.list-item__child ul li:last-child:hover {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+.list-item__child:hover ul.list-item__expand {
     opacity: 1;
     visibility: visible;
     pointer-events: all;
 }
 
-.list-item__expand-procedure::before {
-    content: '';
-    background-color: #C9E6C0;
-    width: 250px;
-    height: 2.5px;
-    position: absolute;
-    top: -7px;
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.3s linear;
-}
-
-.list-item:hover .list-item__expand-procedure::before {
-    transform: scaleX(1);
-}
-
-.list-item__expand-procedure::after {
+ul.list-item__expand::before {
     content: '';
     background-color: transparent;
     width: 250px;
     height: 20px;
     position: absolute;
-    top: -20px;
+    top: -15px;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s linear;
 }
 
-/*! Project */
-.list-item__expand-project {
-    background-color: #fff;
-    position: absolute;
-    width: 250px;
-    top: 50px;
-    left: 10px;
-    display: flex;
-    flex-direction: column;
-    border-radius: 8px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transition: all 0.5s linear;
-    z-index: 10;
+.list-item__child:hover ul.list-item__expand::before {
+    transform: scaleX(1);
 }
-
-.list-item__expand-project i {
+ul.list-item__expand li i {
     float: right;
 }
 
-.list-item:hover .list-item__expand-project {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: all;
+ul.list-item__expand li.list-item__expand--child {
+    position: relative;
 }
 
-/* project onl */
-.list-item__expand-project>div {
-    padding: 10px;
-}
-
-.list-item__expand-project>div:hover {
-    background-color: #C9E6C0;
-}
-
-.list-item__expand-project>div:first-child:hover {
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-}
-
-.list-item__expand-project>div:last-child:hover {
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
-}
-
-.expand__onl .expand__project-onl {
+ul.list-item__expand li.list-item__expand--child ul {
     background-color: #fff;
     position: absolute;
     width: 220px;
@@ -215,183 +169,33 @@ todo    nav-bar
     z-index: 10;
 }
 
-.expand__onl:hover .expand__project-onl {
+li.list-item__expand--child:hover ul.expand__project {
     opacity: 1;
     visibility: visible;
     pointer-events: all;
 }
 
-.expand__project-onl a {
-    padding: 10px;
-}
-
-.expand__project-onl a:hover {
-    background-color: #C9E6C0;
-}
-
-.expand__project-onl a:first-child:hover {
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-}
-
-.expand__project-onl a:last-child:hover {
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-}
-
-.expand__off .expand__project-off {
-    background-color: #fff;
-    position: absolute;
-    width: 220px;
-    top: 40px;
-    left: 252px;
-    display: flex;
-    flex-direction: column;
-    border-radius: 10px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transition: all 0.3s linear;
-    z-index: 10;
-}
-
-.expand__off:hover .expand__project-off {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: all;
-}
-
-.expand__project-off>a {
-    padding: 10px 10px;
-}
-
-.expand__project-off>a:hover {
-    background-color: #C9E6C0;
-}
-
-.expand__project-off>a:first-child:hover {
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-}
-
-.expand__project-off>a:last-child:hover {
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-}
-
-.list-item__expand-project::before {
-    content: '';
-    background-color: #C9E6C0;
-    width: 250px;
-    height: 2.5px;
-    position: absolute;
-    top: -5px;
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.3s linear;
-}
-
-.list-item__project:hover .list-item__expand-project::before {
-    transform: scaleX(1);
-}
-
-.list-item__expand-project::before {
-    content: '';
-    background-color: #C9E6C0;
-    width: 250px;
-    height: 2.5px;
-    position: absolute;
-    top: -7px;
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.3s linear;
-}
-
-.list-item:hover .list-item__expand-project::before {
-    transform: scaleX(1);
-}
-
-.list-item__expand-project::after {
+ul.expand__project::before {
     content: '';
     background-color: transparent;
-    width: 250px;
-    height: 20px;
+    width: 10px;
+    height: 200px;
     position: absolute;
-    top: -20px;
-}
-
-/* !Library */
-.list-item__expand-library {
-    background-color: #fff;
-    position: absolute;
-    width: 250px;
-    top: 50px;
-    left: 10px;
-    display: flex;
-    flex-direction: column;
-    border-radius: 8px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transition: all 0.5s linear;
-    z-index: 10;
-}
-
-.list-item:hover .list-item__expand-library {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: all;
-}
-
-.list-item__expand-library a {
-    padding: 10px 10px;
-}
-
-.list-item__expand-library a:hover {
-    background-color: #C9E6C0;
-}
-
-.list-item__expand-library a:first-child:hover {
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-}
-
-.list-item__expand-library a:last-child:hover {
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-}
-
-.list-item__expand-library::before {
-    content: '';
-    background-color: #C9E6C0;
-    width: 250px;
-    height: 2.5px;
-    position: absolute;
-    top: -7px;
+    left: -10px;
     transform: scaleX(0);
     transform-origin: left;
     transition: transform 0.3s linear;
 }
 
-.list-item:hover .list-item__expand-library::before {
+li.list-item__expand--child:hover ul.expand__project::before {
     transform: scaleX(1);
-}
-
-.list-item__expand-library::after {
-    content: '';
-    background-color: transparent;
-    width: 250px;
-    height: 20px;
-    position: absolute;
-    top: -20px;
 }
 
 .controller {
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 20px;
 }
 
 /* ?==================================== login */
@@ -407,6 +211,35 @@ todo    nav-bar
 
 .login a button.signin {
     background-color: #C9E6C0;
+}
+
+.list-item.controller .search-box {
+    /* background: #fff; */
+    position: absolute;
+    top: 90px;
+    right: 100px;
+    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); */
+    padding: 10px 30px;
+    border-radius: 10px;
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+    transform: scale(1);
+    transition: all 0.2s ease-in-out;
+}
+
+.list-item.controller .search-box.active {
+    opacity: 1;
+    pointer-events: all;
+    visibility: visible;
+}
+
+.list-item.controller .search-box input {
+    width: 500px;
+}
+
+button.ham-menu {
+    display: none;
 }
 
 /*
@@ -425,136 +258,22 @@ todo    nav-bar
 @media screen and (max-width: 905px) {
     .nav-toolbar {
         display: none;
-        position: absolute;
-        top: 110px;
-        right: 0;
-        text-align: center;
-        width: 200px;
-        -webkit-box-shadow: -6.5px 1.5px 8px 3px #dddddd;
-        -moz-box-shadow: -6.5px 1.5px 8px 3px #dddddd;
-        box-shadow: -6.5px 1.5px 8px 3px #dddddd;
-        border-radius: 8px;
-        transition: all .9s ease;
     }
 
-    .list-item>div {
+    .list-item.controller #search {
+        display: none;
+    }
+
+    button.ham-menu {
         display: flex;
-        justify-content: flex-end;
-        align-items: center;
     }
 
-    .list-item>i {
-        float: left;
-    }
-
-    .list-item i.fa-chevron-down {
+    .list-item.controller .list-item.login {
         display: none;
     }
 
-    .list-item i.fa-angle-left {
-        display: block;
-    }
-
-    .list-item__expand-procedure {
-        position: absolute;
-        width: 250px;
-        top: 0px;
-        left: -252px;
-    }
-
-    .list-item__expand-project {
-        position: absolute;
-        width: 250px;
-        top: 10px;
-        left: -252px;
-    }
-
-    .expand__off, .expand__onl {
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-    }
-
-    .expand__onl .fa-angle-right {
+    .list-item.controller .dropdown {
         display: none;
-    }
-
-    .expand__off .fa-angle-right {
-        display: none;
-    }
-
-    .expand__onl>i {
-        float: left;
-        margin-right: 50px;
-    }
-
-    .expand__off>i {
-        margin-right: 50px;
-    }
-
-    .expand__child {
-        margin-left: 28px;
-    }
-
-    .expand__off .expand__project-off {
-        position: absolute;
-        top: 40px;
-        left: -222px;
-    }
-
-    .expand__onl .expand__project-onl {
-        position: absolute;
-        top: 0px;
-        left: -222px;
-    }
-
-    .list-item__expand-library {
-        top: 0px;
-        left: -252px;
-    }
-
-    .responsive__icon--header {
-        display: block;
-    }
-
-    .responsive__icon--header .ham-menu {
-        width: 50px;
-        height: 50px;
-        position: relative;
-    }
-
-    .ham-menu span {
-        height: 4px;
-        width: 90%;
-        background-color: #000;
-        border-radius: 25px;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        transition: .3s ease;
-    }
-
-    .ham-menu span:nth-child(1) {
-        top: 25%;
-    }
-
-    .ham-menu span:nth-child(3) {
-        top: 75%;
-    }
-
-    .ham-menu.active span:nth-child(1) {
-        top: 50%;
-        transform: translate(-50%, -50%) rotate(45deg);
-    }
-
-    .ham-menu.active span:nth-child(2) {
-        opacity: 0;
-    }
-
-    .ham-menu.active span:nth-child(3) {
-        top: 50%;
-        transform: translate(-50%, -50%) rotate(-45deg);
     }
 }
 
@@ -573,96 +292,7 @@ todo    nav-bar
         padding: 0;
     }
 
-    .controller .login a button {
-        font-size: 12px;
-        width: 60px;
-        height: 30px;
-    }
-
-    .search, .login {
+    .search {
         padding: 0 5px
     }
-
-    .responsive__icon--header .ham-menu {
-        width: 30px;
-        height: 30px;
-    }
-
-    .ham-menu span {
-        height: 3px;
-    }
-
-    .nav-toolbar {
-        width: 100%;
-    }
-
-    .list-item__expand-procedure {
-        width: 100%;
-        top: 250px;
-        left: 0px;
-    }
-
-    .list-item__expand-project {
-        width: 100%;
-        top: 210px;
-        left: 0px;
-    }
-
-    .expand__onl .expand__project-onl {
-        width: 100%;
-        top: 120px;
-        left: 0px;
-    }
-
-    .expand__off .expand__project-off {
-        width: 100%;
-        top: 120px;
-        left: 0px;
-    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* .list-item__expand div {
-    padding: 10px 10px;
-}
-
-.list-item__expand div:hover {
-    background-color: #C9E6C0;
-}
-
-.list-item__expand div:first-child:hover {
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-}
-
-.list-item__expand div:last-child:hover {
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-} */
-

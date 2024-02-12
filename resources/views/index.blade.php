@@ -1,3 +1,84 @@
+<?php
+function renderMenuNavbar($categories, $parent_id = 0, $liClass = 'list-item__child')
+{
+    foreach ($categories as $key => $item) {
+        if ($item->parent_id == $parent_id) {
+            echo '<li class="' . $liClass . '">';
+            if (isset($item->slug)) {
+                echo '<a href="' . url("/$item->slug") . '">' . $item->name . '</a>';
+            } else {
+                echo '<span>' . $item->name . '</span>';
+            }
+
+            $hasChildren = false;
+
+            // Kiểm tra xem có menu con không
+            foreach ($categories as $itemChild) {
+                if ($itemChild->parent_id == $item->id) {
+                    $hasChildren = true;
+                    break;
+                }
+            }
+
+            // Nếu có menu con, thực hiện đệ quy để hiển thị menu con
+            if ($hasChildren) {
+                echo '<i class="fa-solid fa-chevron-down"></i>';
+                echo '<ul class="list-item__expand">';
+
+                unset($categories[$key]);
+                foreach ($categories as $key => $valueChild) {
+                    if ($valueChild->parent_id == $item->id) {
+                        $title = $item->name;
+                        $slug = Str::slug($title);
+
+                        echo '<li class="list-item__expand--child">';
+                            if (isset($valueChild->slug)) {
+                                echo '<a href="' . url("$slug/$valueChild->slug") . '">' . $valueChild->name . '</a>';
+                            } else {
+                                echo '<span>' . $valueChild->name . '</span>';
+                            }
+
+                            $hasChild = false;
+
+                            // Kiểm tra xem có menu con không
+                            foreach ($categories as $itemChildren) {
+                                if ($itemChildren->parent_id == $valueChild->id) {
+                                    $hasChild = true;
+                                    break;
+                                }
+                            }
+
+                            if ($hasChild) {
+                                echo '<i class="fa-solid fa-angle-right"></i>';
+                                echo '<ul class="expand__project">';
+                                foreach ($categories as $key => $valueChild3) {
+                                    if ($valueChild3->parent_id == $valueChild->id) {
+                                        $title_lv_2 = $valueChild->name;
+                                        $slug_lv_2 = Str::slug($title_lv_2);
+
+                                        echo '<li class="list-item__expand--child">';
+                                        if (isset($valueChild3->slug)) {
+                                            echo '<a href="' . url("$slug/$slug_lv_2/$valueChild3->slug") . '">' . $valueChild3->name . '</a>';
+                                        } else {
+                                            echo '<span>' . $valueChild3->name . '</span>';
+                                        }
+                                        echo '</li>';
+                                    }
+                                }
+                                echo '</ul>';
+                            }
+                        echo '</li>';
+                    }
+                }
+                echo '</ul>';
+            }
+
+            echo '</li>';
+        }
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -27,6 +108,7 @@
     {{-- css style --}}
     <link rel="stylesheet" href="{{ asset('css/layout/header.css') }}">
     <link rel="stylesheet" href="{{ asset('css/layout/footer.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/layout/sidebar.css') }}">
     <link rel="stylesheet" href="{{ asset('css/bootstrap/bootstrap.min.css') }}">
     <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
 
@@ -134,133 +216,75 @@
             <!--! tool-bar -->
             <div class="nav-toolbar">
                 <!-- procedure -->
-                <div class="list-item">
-                    <i class="fa-solid fa-angle-left"></i>
-                    <div class="list-item__procedure">
-                        <span>Giới thiệu</span>
-                        <i class="fa-solid fa-chevron-down"></i>
-                    </div>
-                    <div class="list-item__expand-procedure">
-                        <a href="{{ route('user.aboutus') }}">
-                            Về trung tâm
-                            <!-- <i class="fa-solid fa-angle-right"></i> -->
-                        </a>
-                        <a href="{{ route('user.benefit') }}">
-                            Quyền lợi của học viên
-                            <!-- <i class="fa-solid fa-angle-right"></i> -->
-                        </a>
-                        <a href="{{ route('user.achievement') }}">
-                            Thành tích học viên
-                            <!-- <i class="fa-solid fa-angle-right"></i> -->
-                        </a>
-                        <a href="{{ route('user.review') }}">
-                            Review từ học viên
-                            <!-- <i class="fa-solid fa-angle-right"></i> -->
-                        </a>
-                        <a href="{{ route('user.teacher') }}">
-                            Giảng viên
-                            <!-- <i class="fa-solid fa-angle-right"></i> -->
-                        </a>
-                    </div>
-                </div>
+                <ul class="list-item">
+                    {{-- @if (isset($categories))
+                        @foreach ($categories as $item)
+                            @if ($item->parent_id == 0)
+                                <li class="list-item__child">
+                                    @if (isset($item->slug))
+                                        <a href="{{ url("/$item->slug") }}">{{ $item->name }}</a>
+                                    @else
+                                        <span>{{ $item->name }}</span>
+                                        <i class="fa-solid fa-chevron-down"></i>
+                                    @endif
 
-                <!-- project -->
-                <div class="list-item">
-                    <i class="fa-solid fa-angle-left"></i>
-                    <div class="list-item__project">
-                        <a href="{{ route('user.project') }}">
-                            Khóa học
-                        </a>
-                        <i class="fa-solid fa-chevron-down"></i>
-                    </div>
-                    <div class="list-item__expand-project">
-                        <div class="expand__onl">
-                            <i class="fa-solid fa-angle-left"></i>
-                            <div>
-                                <span>Khóa học online</span>
-                                <i class="fa-solid fa-angle-right"></i>
-                                <div class="expand__project-onl">
-                                    <a href="{{route('user.project.h2')}}">Sơ cấp HSK0 - HSK2</a>
-                                    <a href="{{route('user.project.h3')}}">HSK3</a>
-                                    <a href="{{route('user.project.h4')}}">HSK4</a>
-                                    <a href="{{route('user.project.h5')}}">HSK5</a>
-                                    <a href="{{route('user.project.h6')}}">HSK6</a>
-                                    <a href="{{route('user.project.kk')}}">Khẩu ngữ</a>
-                                    <a href="{{route('user.project.11')}}">1-1</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="expand__off">
-                            <i class="fa-solid fa-angle-left"></i>
-                            <div>
-                                Khóa học offline
-                                <i class="fa-solid fa-angle-right"></i>
-                                <div class="expand__project-off">
-                                    <a href="{{route('user.project.hsk2.off')}}">Sơ cấp HSK0 - HSK2</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="expand__child">
-                            Khóa học cho trẻ em
-                        </div>
-                    </div>
-                </div>
+                                    <ul class="list-item__expand">
+                                        @foreach ($categories as $item_child)
+                                            @if ($item_child->parent_id == $item->id)
+                                                @php
+                                                    $title = $item->name;
+                                                    $slug = Str::slug($title);
+                                                @endphp
+                                                <li class="list-item__expand--child">
+                                                    @if (isset($item_child->slug))
+                                                        <a href="{{ url("/$slug/$item_child->slug") }}">
+                                                            {{ $item_child->name }}
+                                                        </a>
+                                                    @else
+                                                        <span>{{ $item_child->name }}</span>
+                                                        <i class="fa-solid fa-angle-right"></i>
+                                                    @endif
 
-                <!-- khai giảng -->
-                <div class="list-item">
-                    <div>
-                        <a href="{{ route('user.lich') }}">
-                            Lịch khai giảng
-                        </a>
-                    </div>
-                </div>
+                                                    <ul class="expand__project">
+                                                        @foreach ($categories as $item_child2)
+                                                            @if ($item_child2->parent_id == $item_child->id)
+                                                                @php
+                                                                    $title_lv_2 = $item_child->name;
+                                                                    $slug_lv_2 = Str::slug($title_lv_2);
+                                                                @endphp
+                                                                <li><a style="width: 100%"
+                                                                        href="{{ url("$slug/$slug_lv_2/$item_child2->slug") }}">{{ $item_child2->name }}</a>
+                                                                </li>
+                                                            @endif
+                                                        @endforeach
+                                                    </ul>
+                                                </li>
+                                            @endif
+                                        @endforeach
+                                    </ul>
+                                </li>
+                            @endif
+                        @endforeach
+                    @endif --}}
 
-                <!-- Library -->
-                <div class="list-item">
-                    <i class="fa-solid fa-angle-left"></i>
-                    <div class="list-item__library">
-                        Thư viện
-                        <i class="fa-solid fa-chevron-down"></i>
-                    </div>
-                    <div class="list-item__expand-library">
-                        <a href="{{ route('user.vocab') }}">Từ vựng Tiếng Trung
-                            <!-- <i class="fa-solid fa-angle-right"></i> -->
-                        </a>
-                        <a href="{{ route('user.grammar') }}">Ngữ pháp Tiếng Trung
-                            <!-- <i class="fa-solid fa-angle-right"></i> -->
-                        </a>
-                        <a href="{{ route('user.thanh.ngu') }}">Thành ngữ Tiếng Trung
-                            <!-- <i class="fa-solid fa-angle-right"></i> -->
-                        </a>
-                        <a href="{{ route('user.duhoc') }}">Du học Trung Quốc
-                            <!-- <i class="fa-solid fa-angle-right"></i> -->
-                        </a>
-                        <a href="{{ route('user.thi.hsk') }}">Kinh nghiệm thi HSK
-                            <!-- <i class="fa-solid fa-angle-right"></i> -->
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Employ -->
-                <div class="list-item">
-                    <div>
-                        <a href="{{ route('user.employ') }}">Tuyển dụng</a>
-                    </div>
-                </div>
-
-                <!-- Contact -->
-                <div class="list-item">
-                    <div>
-                        <a href="{{ route('user.contact') }}">Liên hệ</a>
-                    </div>
-                </div>
+                    @if (isset($categories))
+                        @php renderMenuNavbar($categories) @endphp
+                    @endif
+                </ul>
 
             </div>
             <!-- controller -->
             <div class="list-item controller">
                 <!-- Search -->
-                <div class="list-item search">
-                    <i class="fa fa-search"></i>
+                <div class="list-item search" id="search">
+                    <button style="border: none; background: transparent"><i class="fa fa-search"></i></button>
+                </div>
+
+                <div class="search-box">
+                    <div class="search-input d-flex">
+                        <input type="text" class="form-control mx-1" placeholder="Search...">
+                        <button class="btn btn-primary">Search</button>
+                    </div>
                 </div>
 
                 @if (session('accountLogin'))
@@ -284,7 +308,7 @@
                     </div>
                 @else
                     <!-- Login -->
-                    <div class="list-item login">
+                    <div class="list-item login login_responsive">
                         <a href="{{ route('user.login.form') }}">
                             <button class="signin">
                                 Đăng nhập
@@ -296,11 +320,267 @@
             </div>
 
             <!-- !responsive -->
-            <div class="responsive__icon--header">
-                <div class="ham-menu ">
-                    <span></span>
-                    <span></span>
-                    <span></span>
+            <button class="btn ham-menu" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
+                aria-controls="offcanvasRight">
+                <i class="bi bi-x-lg"></i>
+            </button>
+
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight"
+                aria-labelledby="offcanvasRightLabel">
+                <div class="offcanvas-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <main class="d-flex flex-nowrap">
+                        <div class="flex-shrink-0 p-3 bg-white" style="width: 100%;">
+                            <ul class="list-unstyled ps-0">
+                                @if (isset($categories))
+                                    @foreach ($categories as $key => $item)
+                                        @if ($item->parent_id == 0)
+                                            <li class="mb-1">
+                                                <button
+                                                    class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
+                                                    data-bs-toggle="collapse"
+                                                    data-bs-target="#dashboard-{{ $key }}"
+                                                    aria-expanded="false">
+                                                    @if (isset($item->slug))
+                                                        <a href="{{ url("/$item->slug") }}"
+                                                            class="link-dark d-inline-flex text-decoration-none rounded">{{ $item->name }}</a>
+                                                    @else
+                                                        {{ $item->name }}
+                                                    @endif
+                                                </button>
+                                                @foreach ($categories as $item_lv_2)
+                                                    @if ($item_lv_2->parent_id == $item->id)
+                                                        <div class="collapse" id="dashboard-{{ $key }}">
+                                                            <ul
+                                                                class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                                                <li>
+                                                                    <button
+                                                                        class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
+                                                                        data-bs-toggle="collapse"
+                                                                        data-bs-target=".collapse-child"
+                                                                        aria-expanded="false">
+                                                                        @if (isset($item_lv_2->slug))
+                                                                            <a href="{{ url("/$item_lv_2->slug") }}"
+                                                                                class="link-dark d-inline-flex text-decoration-none rounded">{{ $item_lv_2->name }}</a>
+                                                                        @else
+                                                                            {{ $item_lv_2->name }}
+                                                                        @endif
+                                                                    </button>
+                                                                    @foreach ($categories as $item_lv_3)
+                                                                        @if ($item_lv_3->parent_id == $item_lv_2->id)
+                                                                            <div class="collapse"
+                                                                                class="collapse-child">
+                                                                                <ul
+                                                                                    class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                                                                    <li><a href="{{ url("/$item_lv_3->slug") }}"
+                                                                                            class="link-dark d-inline-flex text-decoration-none rounded">{{ $item_lv_3->name }}</a>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </div>
+                                                                        @endif
+                                                                    @endforeach
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    @endif
+                                                @endforeach
+                                            </li>
+                                        @endif
+                                    @endforeach
+                                @endif
+                                {{-- <li class="mb-1">
+                                    <button
+                                        class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
+                                        data-bs-toggle="collapse" data-bs-target="#home-collapse"
+                                        aria-expanded="false">
+                                        Giới thiệu
+                                    </button>
+                                    <div class="collapse" id="home-collapse">
+                                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                            <li><a href="{{ route('user.aboutus') }}"
+                                                    class="link-dark d-inline-flex text-decoration-none rounded">Về
+                                                    chúng tôi</a></li>
+                                            <li><a href="{{ route('user.benefit') }}"
+                                                    class="link-dark d-inline-flex text-decoration-none rounded">Quyền
+                                                    lợi của học viên</a></li>
+                                            <li><a href="{{ route('user.achievement') }}"
+                                                    class="link-dark d-inline-flex text-decoration-none rounded">Thành
+                                                    tích học viên</a></li>
+                                            <li><a href="{{ route('user.review') }}"
+                                                    class="link-dark d-inline-flex text-decoration-none rounded">Review
+                                                    từ học viên</a></li>
+                                            <li><a href="{{ route('user.teacher') }}"
+                                                    class="link-dark d-inline-flex text-decoration-none rounded">Giảng
+                                                    viên</a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-1">
+                                    <button
+                                        class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
+                                        data-bs-toggle="collapse" data-bs-target="#dashboard-collapse"
+                                        aria-expanded="false">
+                                        <a href="{{ route('user.project') }}"
+                                            class="link-dark d-inline-flex text-decoration-none rounded">Khóa học</a>
+                                    </button>
+                                    <div class="collapse" id="dashboard-collapse">
+                                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                            <li>
+                                                <button
+                                                    class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
+                                                    data-bs-toggle="collapse" data-bs-target="#proj-onl-collapse"
+                                                    aria-expanded="false">
+                                                    Khóa học online
+                                                </button>
+                                                <div class="collapse" id="proj-onl-collapse">
+                                                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                                        <li><a href="{{ route('user.project.h2') }}"
+                                                                class="link-dark d-inline-flex text-decoration-none rounded">Sơ
+                                                                cấp HSK0 - HSK2</a></li>
+                                                        <li><a href="{{ route('user.project.h3') }}"
+                                                                class="link-dark d-inline-flex text-decoration-none rounded">HSK3</a>
+                                                        </li>
+                                                        <li><a href="{{ route('user.project.h4') }}"
+                                                                class="link-dark d-inline-flex text-decoration-none rounded">HSK4</a>
+                                                        </li>
+                                                        <li><a href="{{ route('user.project.h5') }}"
+                                                                class="link-dark d-inline-flex text-decoration-none rounded">HSK5</a>
+                                                        </li>
+                                                        <li><a href="{{ route('user.project.h6') }}"
+                                                                class="link-dark d-inline-flex text-decoration-none rounded">HSK6</a>
+                                                        </li>
+                                                        <li><a href="{{ route('user.project.11') }}"
+                                                                class="link-dark d-inline-flex text-decoration-none rounded">Khóa
+                                                                học 1-1</a></li>
+                                                        <li><a href="{{ route('user.project.kk') }}"
+                                                                class="link-dark d-inline-flex text-decoration-none rounded">Khẩu
+                                                                ngữ</a></li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <button
+                                                    class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
+                                                    data-bs-toggle="collapse" data-bs-target="#proj-onf-collapse"
+                                                    aria-expanded="false">
+                                                    Khóa học offline
+                                                </button>
+                                                <div class="collapse" id="proj-onf-collapse">
+                                                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                                        <li><a href="{{ route('user.project.hsk2.off') }}"
+                                                                class="link-dark d-inline-flex text-decoration-none rounded">Sơ
+                                                                cấp HSK0 - HSK2</a></li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <button
+                                                    class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
+                                                    data-bs-toggle="collapse" data-bs-target="#proj-yct-collapse"
+                                                    aria-expanded="false">
+                                                    Khóa học cho trẻ em
+                                                </button>
+                                                <div class="collapse" id="proj-yct-collapse">
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-1">
+                                    <button
+                                        class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed">
+                                        <a href="{{ route('user.lich') }}">Lịch khai giảng</a>
+                                    </button>
+                                </li>
+
+                                <li class="mb-1">
+                                    <button
+                                        class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
+                                        data-bs-toggle="collapse" data-bs-target="#lib-collapse"
+                                        aria-expanded="false">
+                                        Thư viện
+                                    </button>
+                                    <div class="collapse" id="lib-collapse">
+                                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                            <li><a href="{{ route('user.vocab') }}"
+                                                    class="link-dark d-inline-flex text-decoration-none rounded">Từ
+                                                    vựng Tiếng Trung</a>
+                                            </li>
+                                            <li><a href="{{ route('user.grammar') }}"
+                                                    class="link-dark d-inline-flex text-decoration-none rounded">Ngữ
+                                                    pháp Tiếng Trung</a>
+                                            </li>
+                                            <li><a href="{{ route('user.thanh.ngu') }}"
+                                                    class="link-dark d-inline-flex text-decoration-none rounded">Thành
+                                                    ngữ Tiếng trung</a>
+                                            </li>
+                                            <li><a href="{{ route('user.duhoc') }}"
+                                                    class="link-dark d-inline-flex text-decoration-none rounded">Du học
+                                                    Trung Quốc</a>
+                                            </li>
+                                            <li><a href="{{ route('user.thi.hsk') }}"
+                                                    class="link-dark d-inline-flex text-decoration-none rounded">Kinh
+                                                    nghiệm thi HSK</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+
+                                <li class="mb-1">
+                                    <button
+                                        class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed">
+                                        <a href="{{ route('user.employ') }}">Tuyển dụng</a>
+                                    </button>
+                                </li>
+
+                                <li class="mb-1">
+                                    <button
+                                        class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed">
+                                        <a href="{{ route('user.contact') }}">Liên hệ</a>
+                                    </button>
+                                </li> --}}
+
+                                <li class="border-top my-3"></li>
+                                <li class="mb-1">
+                                    @if (session('accountLogin'))
+                                        <button
+                                            class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
+                                            data-bs-toggle="collapse" data-bs-target="#account-collapse"
+                                            aria-expanded="false">
+                                            {{ session('accountLogin')['fullname'] }}
+                                        </button>
+                                        <div class="collapse" id="account-collapse">
+                                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                                <li><a href="#"
+                                                        class="link-dark d-inline-flex text-decoration-none rounded">New...</a>
+                                                </li>
+                                                <li><a href="#"
+                                                        class="link-dark d-inline-flex text-decoration-none rounded">Profile</a>
+                                                </li>
+                                                <li><a href="#"
+                                                        class="link-dark d-inline-flex text-decoration-none rounded">Settings</a>
+                                                </li>
+                                                <li><a href="#"
+                                                        class="link-dark d-inline-flex text-decoration-none rounded">Sign
+                                                        out</a></li>
+                                            </ul>
+                                        </div>
+                                    @else
+                                        <!-- Login -->
+                                        <div class="list-item login">
+                                            <a href="{{ route('user.login.form') }}">
+                                                <button class="signin">
+                                                    Đăng nhập
+                                                </button>
+                                            </a>
+                                        </div>
+                                    @endif
+                                </li>
+                            </ul>
+                        </div>
+                    </main>
                 </div>
             </div>
         </div>
@@ -401,6 +681,7 @@
 <script src="{{ asset('js/carousel.js') }}"></script>
 <script src="{{ asset('js/login.js') }}"></script>
 <script src="{{ asset('js/slick-slider.js') }}"></script>
+<script src="{{ asset('js/login.js') }}"></script>
 
 <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
 {!! Toastr::message() !!}

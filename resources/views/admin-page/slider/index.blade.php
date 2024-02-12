@@ -27,24 +27,27 @@
                                         <input type="submit" value="-" data-id="{{ $item->id }}"
                                             data-url="{{ route('decrease.slider') }}" class="decrease"
                                             style="background: transparent; border: none">
-                                        <span class="stt-slider" data-item-id="{{ $item->id }}">{{ $item->stt }}</span>
+                                        <span class="stt-slider"
+                                            data-item-id="{{ $item->id }}">{{ $item->stt }}</span>
                                         <input type="submit" value="+" data-id="{{ $item->id }}"
                                             data-url="{{ route('increase.slider') }}" class="increase"
                                             style="background: transparent; border: none">
                                     </td>
                                     <td>
-                                        {{$item->menu1}}
+                                        @if ($item->menu1 == null)
+                                            <span>Trang chủ</span>
+                                        @else
+                                            {{ $item->menu1 }}
+                                        @endif
                                     </td>
                                     <td>
                                         <img src="{{ asset($item->image) }}" alt="" style="width: 100px">
                                     </td>
                                     <td style="width: 150px">
-                                        <select class="form-select status_slider bg-light" data-id="{{ $item->id }}"
-                                            data-url="{{ route('status.slider') }}">
-                                            <option value="{{ $item->status }}">{{ $item->status }}</option>
-                                            <option value="None">None</option>
-                                            <option value="Public Page">Public Page</option>
-                                        </select>
+                                        <input type="checkbox" name="" class="status_slider"
+                                            data-id="{{ $item->id }}" data-url="{{ route('status.slider') }}" value="{{$item->status}}"
+                                            @if($item->status == 'Public Page') checked @endif> Public
+                                        Page
                                     </td>
                                     <td>
                                         <a href="{{ route('edit.slider', $item->id) }}"
